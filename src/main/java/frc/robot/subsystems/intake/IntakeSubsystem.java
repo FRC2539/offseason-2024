@@ -20,6 +20,7 @@ public class IntakeSubsystem extends SubsystemBase {
     {
         topIntakeIO.update();
         bottomIntakeIO.update();
+
     }
 
 }
