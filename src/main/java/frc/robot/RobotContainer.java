@@ -14,9 +14,12 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
+import frc.lib.framework.motor.MotorIOTalonSRX;
+import frc.lib.framework.sensor.DigitalSensorIO;
+import frc.lib.framework.sensor.DigitalSensorIODigital;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.swerve.Telemetry;
-
+import frc.robot.subsystems.transport.TransportSubsystem;
 import monologue.Logged;
 
 public class RobotContainer implements Logged {
@@ -26,6 +29,7 @@ public class RobotContainer implements Logged {
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final CommandXboxController joystick = new CommandXboxController(0); // My joystick
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+  private final TransportSubsystem transport = new TransportSubsystem(new MotorIOTalonSRX(Constants.LEFT_TRANSPORT_MOTOR_PORT), new MotorIOTalonSRX(Constants.RIGHT_TRANSPORT_MOTOR_PORT), new DigitalSensorIODigital(Constants.CENTRAL_TRANSPORT_SENSOR_PORT), new DigitalSensorIODigital(Constants.AMP_MODE_SENSOR_PORT));
 
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
       .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
@@ -54,6 +58,8 @@ public class RobotContainer implements Logged {
       drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
     }
     drivetrain.registerTelemetry(logger::telemeterize);
+
+    
   }
 
   public RobotContainer() {

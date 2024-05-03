@@ -1,24 +1,29 @@
 package frc.robot.subsystems.transport;
 
-
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.framework.motor.MotorIO;
+import frc.lib.framework.motor.MotorIOTalonSRX;
 import frc.lib.framework.sensor.DigitalSensorIO;
+import frc.lib.framework.sensor.DigitalSensorIODigital;
 import monologue.Logged;
-import monologue.Annotations.Log;
 
 public class TransportSubsystem extends SubsystemBase implements Logged {
     
-    private MotorIO leftMotorIO;
-    private MotorIO rightMotorIO;
-    private DigitalSensorIO beamBreakIO;
+    private MotorIOTalonSRX leftMotorIO;
+    private MotorIOTalonSRX rightMotorIO;
+    private DigitalSensorIODigital centerTransportIO;
+    private DigitalSensorIODigital ampModeIO;
 
-    public TransportSubsystem(MotorIO topIntakeMotor, MotorIO bottomIntakeMotor, DigitalSensorIO transportSensorIO)
+    public TransportSubsystem(MotorIOTalonSRX leftMotorIO, MotorIOTalonSRX rightMotorIO, DigitalSensorIODigital transportSensorIO, DigitalSensorIODigital ampModeSensorIO)
     {
         
-        this.leftMotorIO = topIntakeMotor;
-        this.rightMotorIO = bottomIntakeMotor;
-        this.beamBreakIO = transportSensorIO;
+        this.leftMotorIO = leftMotorIO;
+        this.rightMotorIO = rightMotorIO;
+        this.centerTransportIO = transportSensorIO;
+        this.ampModeIO = ampModeSensorIO;
+
+        setDefaultCommand(stopTransport());
     }
 
     @Override
@@ -26,13 +31,41 @@ public class TransportSubsystem extends SubsystemBase implements Logged {
     {
         leftMotorIO.update();
         rightMotorIO.update();
-        beamBreakIO.update();
-
+        centerTransportIO.update();
+        ampModeIO.update();
         
-        log("sensor" , beamBreakIO.getSensor());
-
+        log("sensor/center" , centerTransportIO.getSensor());
+        log("sensor/ampMode", ampModeIO.getSensor());
     }
 
+    private void setMotorVoltage(double voltage)
+    {
+        leftMotorIO.setVoltage(voltage);
+        rightMotorIO.setVoltage(voltage);
+    }
 
+    public Command runTransport(double voltage)
+    {
+        return run(() -> setMotorVoltage(voltage));
+    }
 
+    public Command runTransportForward()
+    {
+        return runTransport(12);
+    }
+
+    public Command runTransportReverse()
+    {
+        return runTransport(-12);
+    }
+
+    public Command stopTransport()
+    {
+        return runTransport(0);
+    }
+
+    public Command putPieceInAmpMode()
+    {
+        return runTransportForward().until(() -> !ampModeIO.getSensor());
+    }
 }
