@@ -5,17 +5,16 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.framework.motor.MotorIO;
 import frc.lib.framework.motor.MotorIOTalonSRX;
 import frc.lib.framework.sensor.DigitalSensorIO;
-import frc.lib.framework.sensor.DigitalSensorIODigital;
 import monologue.Logged;
 
 public class TransportSubsystem extends SubsystemBase implements Logged {
     
-    private MotorIOTalonSRX leftMotorIO;
-    private MotorIOTalonSRX rightMotorIO;
-    private DigitalSensorIODigital centerTransportIO;
-    private DigitalSensorIODigital ampModeIO;
+    private MotorIO leftMotorIO;
+    private MotorIO rightMotorIO;
+    private DigitalSensorIO centerTransportIO;
+    private DigitalSensorIO ampModeIO;
 
-    public TransportSubsystem(MotorIOTalonSRX leftMotorIO, MotorIOTalonSRX rightMotorIO, DigitalSensorIODigital transportSensorIO, DigitalSensorIODigital ampModeSensorIO)
+    public TransportSubsystem(MotorIO leftMotorIO, MotorIOTalonSRX rightMotorIO, DigitalSensorIO transportSensorIO, DigitalSensorIO ampModeSensorIO)
     {
         
         this.leftMotorIO = leftMotorIO;
@@ -42,6 +41,16 @@ public class TransportSubsystem extends SubsystemBase implements Logged {
     {
         leftMotorIO.setVoltage(voltage);
         rightMotorIO.setVoltage(voltage);
+    }
+
+    public boolean getCentralTransportSensor()
+    {
+        return centerTransportIO.getSensor();
+    }
+
+    public boolean getAmpSideSensor()
+    {
+        return ampModeIO.getSensor();
     }
 
     public Command runTransport(double voltage)

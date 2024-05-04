@@ -2,7 +2,7 @@ package frc.lib.framework.sensor;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
-public class DigitalSensorIODigital {
+public class DigitalSensorIODigital implements DigitalSensorIO {
     protected boolean sensorActivated = false;
     protected boolean invert = false;
 
