@@ -39,5 +39,11 @@ public class ShooterWheels extends SubsystemBase implements Logged{
         return run(() -> setWheelVelocity(velocity));
     }
 
+<<<<<<< HEAD
+=======
+    
+
+
+>>>>>>> 841d33851b3937e47f26949cd01bbfc84251aaa7
 
 }
