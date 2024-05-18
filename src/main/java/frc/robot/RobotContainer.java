@@ -17,6 +17,7 @@ import frc.lib.controller.LogitechController;
 import frc.lib.framework.motor.MotorIOTalonSRX;
 import frc.lib.framework.sensor.DigitalSensorIODigital;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.shooter.MotorIOShooterWheels;
 import frc.robot.subsystems.shooter.ShooterWheelsSubsystem;
 import frc.robot.subsystems.transport.TransportSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
@@ -25,14 +26,14 @@ import monologue.Logged;
 
 public class RobotContainer implements Logged {
   private double MaxSpeed = TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
-  private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per second max angular velocity
+  private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per secoond max angular velocity
 
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final LogitechController joystick = new LogitechController(0); // My joystick
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   private final TransportSubsystem transport = new TransportSubsystem(new MotorIOTalonSRX(Constants.LEFT_TRANSPORT_MOTOR_PORT), new MotorIOTalonSRX(Constants.RIGHT_TRANSPORT_MOTOR_PORT), new DigitalSensorIODigital(Constants.CENTRAL_TRANSPORT_SENSOR_PORT), new DigitalSensorIODigital(Constants.AMP_MODE_SENSOR_PORT));
   private final IntakeSubsystem intake = new IntakeSubsystem(new MotorIOTalonSRX(Constants.TOP_INTAKE_MOTOR_PORT), new MotorIOTalonSRX(Constants.BOTTOM_INTAKE_MOTOR_PORT));
-  private final ShooterWheelsSubsystem shooterWheels = new ShooterWheelsSubsystem(Constants.TOP_SHOOTER_WHEELS_MOTOR_PORT, "ABCDE", Constants.BOTTOM_SHOOTER_WHEELS_MOTOR_PORT, "FGHIJ");
+
 
 
 
@@ -60,7 +61,6 @@ public class RobotContainer implements Logged {
     joystick.getY().whileTrue(intake.runIntakeForward());
     joystick.getLeftBumper().onTrue(intake.runIntakeForward().until(() -> transport.getCentralTransportSensor()).andThen(transport.runTransportForward()).until(() -> transport.getAmpSideSensor()));
 
-    joystick.getDPadDown().whileTrue(shooterWheels.setShooterVelocity(60));
     // reset the field-centric heading on left bumper press
     joystick.getLeftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
