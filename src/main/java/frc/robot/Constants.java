@@ -12,7 +12,8 @@ public class Constants
     static final int TOP_INTAKE_MOTOR_PORT = 9;
     static final int BOTTOM_INTAKE_MOTOR_PORT = 9;
 
-
+    static final int TOP_SHOOTER_WHEELS_MOTOR_PORT = 10;
+    static final int BOTTOM_SHOOTER_WHEELS_MOTOR_PORT = 11;
 
 
 

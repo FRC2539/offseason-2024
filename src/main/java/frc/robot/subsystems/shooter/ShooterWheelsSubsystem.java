@@ -1,20 +1,16 @@
 package frc.robot.subsystems.shooter;
 
 //import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.controller.SimpleMotorFeedforward;
-import edu.wpi.first.units.Velocity;
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.lib.framework.motor.MotorIO;
 import monologue.Logged;
 import edu.wpi.first.wpilibj2.command.Command;
 
-public class ShooterWheels extends SubsystemBase implements Logged{
+public class ShooterWheelsSubsystem extends SubsystemBase implements Logged{
     
     // do not trust any numbers you see they are wrong
 
-    private MotorIO topShooterIO;
-    private MotorIO bottomShooterIO;
+    private MotorIOShooterWheels topShooterIO;
+    private MotorIOShooterWheels bottomShooterIO;
    // private PIDController pid;
    // private SimpleMotorFeedforward ffwd = new SimpleMotorFeedforward(1, 2, 3); //fix values later
 
@@ -25,13 +21,12 @@ public class ShooterWheels extends SubsystemBase implements Logged{
    // private double valueToGetTo = 100;
     
 
-    public ShooterWheels(MotorIO topShooter, MotorIO bottomShooter)
+    public ShooterWheelsSubsystem(int topPort, String topCanbus, int bottomPort, String bottomCanbus)
     {
-        topShooterIO = topShooter;
-        bottomShooterIO = bottomShooter;
-       // pid = new PIDController(kP, 0, kD);
+        topShooterIO = new MotorIOShooterWheels(topPort, topCanbus);
+        bottomShooterIO = new MotorIOShooterWheels(bottomPort, bottomCanbus);
 
-        //topShooterIO.setTargetVelocity(pid.calculate(testEncoder.get(), valueToGetTo));
+        setDefaultCommand(stopShooterWheels());
     }
 
     @Override
@@ -46,8 +41,13 @@ public class ShooterWheels extends SubsystemBase implements Logged{
         bottomShooterIO.setTargetVelocity(velocity);
     }
 
-    public Command setShooterVelocity(double velocity)
+    public Command setShooterVelocity(double velocityInRotPerSec)
     {
-        return run(() -> setWheelVelocity(velocity));
+        return run(() -> setWheelVelocity(velocityInRotPerSec * Math.PI * 2));
+    }
+
+    public Command stopShooterWheels()
+    {
+        return setShooterVelocity(0);
     }
 }

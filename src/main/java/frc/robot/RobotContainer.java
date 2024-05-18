@@ -17,8 +17,7 @@ import frc.lib.controller.LogitechController;
 import frc.lib.framework.motor.MotorIOTalonSRX;
 import frc.lib.framework.sensor.DigitalSensorIODigital;
 import frc.robot.subsystems.intake.IntakeSubsystem;
-import frc.robot.subsystems.shooter.MotorIOShooterWheels;
-import frc.robot.subsystems.shooter.ShooterWheels;
+import frc.robot.subsystems.shooter.ShooterWheelsSubsystem;
 import frc.robot.subsystems.transport.TransportSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.swerve.Telemetry;
@@ -33,7 +32,7 @@ public class RobotContainer implements Logged {
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   private final TransportSubsystem transport = new TransportSubsystem(new MotorIOTalonSRX(Constants.LEFT_TRANSPORT_MOTOR_PORT), new MotorIOTalonSRX(Constants.RIGHT_TRANSPORT_MOTOR_PORT), new DigitalSensorIODigital(Constants.CENTRAL_TRANSPORT_SENSOR_PORT), new DigitalSensorIODigital(Constants.AMP_MODE_SENSOR_PORT));
   private final IntakeSubsystem intake = new IntakeSubsystem(new MotorIOTalonSRX(Constants.TOP_INTAKE_MOTOR_PORT), new MotorIOTalonSRX(Constants.BOTTOM_INTAKE_MOTOR_PORT));
-
+  private final ShooterWheelsSubsystem shooterWheels = new ShooterWheelsSubsystem(Constants.TOP_SHOOTER_WHEELS_MOTOR_PORT, "ABCDE", Constants.BOTTOM_SHOOTER_WHEELS_MOTOR_PORT, "FGHIJ");
 
 
 
@@ -61,6 +60,7 @@ public class RobotContainer implements Logged {
     joystick.getY().whileTrue(intake.runIntakeForward());
     joystick.getLeftBumper().onTrue(intake.runIntakeForward().until(() -> transport.getCentralTransportSensor()).andThen(transport.runTransportForward()).until(() -> transport.getAmpSideSensor()));
 
+    joystick.getDPadDown().whileTrue(shooterWheels.setShooterVelocity(60));
     // reset the field-centric heading on left bumper press
     joystick.getLeftBumper().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
