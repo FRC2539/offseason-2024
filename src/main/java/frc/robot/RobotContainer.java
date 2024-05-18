@@ -17,6 +17,8 @@ import frc.lib.controller.LogitechController;
 import frc.lib.framework.motor.MotorIOTalonSRX;
 import frc.lib.framework.sensor.DigitalSensorIODigital;
 import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.shooter.MotorIOShooterWheels;
+import frc.robot.subsystems.shooter.ShooterWheels;
 import frc.robot.subsystems.transport.TransportSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.swerve.Telemetry;
@@ -31,6 +33,7 @@ public class RobotContainer implements Logged {
   private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
   private final TransportSubsystem transport = new TransportSubsystem(new MotorIOTalonSRX(Constants.LEFT_TRANSPORT_MOTOR_PORT), new MotorIOTalonSRX(Constants.RIGHT_TRANSPORT_MOTOR_PORT), new DigitalSensorIODigital(Constants.CENTRAL_TRANSPORT_SENSOR_PORT), new DigitalSensorIODigital(Constants.AMP_MODE_SENSOR_PORT));
   private final IntakeSubsystem intake = new IntakeSubsystem(new MotorIOTalonSRX(Constants.TOP_INTAKE_MOTOR_PORT), new MotorIOTalonSRX(Constants.BOTTOM_INTAKE_MOTOR_PORT));
+
 
 
 
