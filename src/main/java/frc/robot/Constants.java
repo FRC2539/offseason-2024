@@ -14,7 +14,9 @@ public class Constants
 
     static final int TOP_SHOOTER_WHEELS_MOTOR_PORT = 10;
     static final int BOTTOM_SHOOTER_WHEELS_MOTOR_PORT = 11;
-
+    
+    static final int PIVOT_MOTOR_PORT = 12;
+    static final int THROUGHBORE_ENCODER_PORT_PIVOT = 13;
 
 
     //Prefixed Shot Angles

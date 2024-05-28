@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 public class ShooterPivot extends SubsystemBase implements Logged {
     
     private MotorIOShooterPivot pivotMotor;
+    double targetAngle = 0;
 
     public ShooterPivot(int port, String canbus, int dutyCyclePort) {
         pivotMotor = new MotorIOShooterPivot(port, canbus, dutyCyclePort);
@@ -21,6 +22,7 @@ public class ShooterPivot extends SubsystemBase implements Logged {
     private void setTargetAngle(double angle)
     {
         pivotMotor.setTargetPosition(angle);
+        targetAngle = angle;
     }
 
     private void zeroPositionOfPivot()
@@ -44,4 +46,12 @@ public class ShooterPivot extends SubsystemBase implements Logged {
         return run(() -> zeroPositionOfPivot());
     }
 
+    @Override
+    public void periodic()
+    {
+        pivotMotor.update();
+
+        log("motor/shooter/pivot", pivotMotor.getPosition());
+        log("motor/shooter/pivot", targetAngle);
+    }
 }

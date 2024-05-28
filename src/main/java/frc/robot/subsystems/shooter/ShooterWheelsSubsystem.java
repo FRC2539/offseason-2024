@@ -32,7 +32,11 @@ public class ShooterWheelsSubsystem extends SubsystemBase implements Logged{
     @Override
     public void periodic()
     {
-        
+        topShooterIO.update();
+        bottomShooterIO.update();
+
+        log("motor/shooter/wheels", topShooterIO.getVelocity());
+        log("motor/shooter/wheels", bottomShooterIO.getVelocity());
     }
 
     private void setWheelVelocity(double velocity)
