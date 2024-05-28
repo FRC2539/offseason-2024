@@ -8,11 +8,10 @@ import monologue.Logged;
 
 public class ShooterPivot extends SubsystemBase implements Logged {
     
-    private MotorIO pivotMotor;
-    private EncoderIO pivotEncoder;
+    private MotorIOShooterPivot pivotMotor;
 
-    public ShooterPivot() {
-
+    public ShooterPivot(int port, String canbus) {
+        pivotMotor = new MotorIOShooterPivot(port, canbus);
     }
 
 }
