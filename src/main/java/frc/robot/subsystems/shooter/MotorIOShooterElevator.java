@@ -7,14 +7,17 @@ import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.signals.GravityTypeValue;
 import com.fasterxml.jackson.databind.KeyDeserializer;
 
+import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.lib.framework.motor.MotorIOTalonFX;
 
 public class MotorIOShooterElevator extends MotorIOTalonFX {
 
-    public MotorIOShooterElevator(int port, String canbus){
+    public MotorIOShooterElevator(int port, String canbus) {
         super(port, canbus);
+
         TalonFXConfigurator configurator = motor.getConfigurator();
         Slot0Configs configs = new Slot0Configs();
+
         configs.GravityType = GravityTypeValue.Elevator_Static;
         configs.kP = 0.45; //fix valules later, incorrect
         configs.kD = 1; //fix valules later, incorrect

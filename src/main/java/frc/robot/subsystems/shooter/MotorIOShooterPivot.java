@@ -9,8 +9,7 @@ import frc.lib.framework.motor.MotorIOTalonFX;
 
 public class MotorIOShooterPivot extends MotorIOTalonFX {
 
-    public MotorIOShooterPivot(int port, String canbus)
-    {
+    public MotorIOShooterPivot(int port, String canbus) {
         super(port, canbus);
 
         TalonFXConfigurator configurator = motor.getConfigurator();

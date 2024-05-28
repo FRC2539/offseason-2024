@@ -19,6 +19,7 @@ import frc.lib.framework.sensor.DigitalSensorIODigital;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.shooter.MotorIOShooterWheels;
 import frc.robot.subsystems.shooter.ShooterWheelsSubsystem;
+import frc.robot.subsystems.shooter.ShooterElevator;
 import frc.robot.subsystems.transport.TransportSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.swerve.Telemetry;
