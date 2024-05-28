@@ -6,6 +6,8 @@ import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import frc.lib.framework.motor.MotorIOTalonFX;
 
 public class MotorIOShooterWheels extends MotorIOTalonFX {
+
+
     public MotorIOShooterWheels(int port, String canbus) {
         super(port, canbus);
 

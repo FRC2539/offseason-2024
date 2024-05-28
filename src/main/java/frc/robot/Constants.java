@@ -17,4 +17,8 @@ public class Constants
 
 
 
+    //Prefixed Shot Angles
+    public static final double FRONT_SUBWOOFER_SHOT_ANGLE = 45.0;
+    public static final double STAGE_POLE_SHOT_ANGLE = 30.0;
+
 }
