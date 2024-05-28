@@ -15,6 +15,6 @@ public class MotorIOShooterWheels extends MotorIOTalonFX {
         configs.kP = 0.2;
         configs.kV = 0.119;
         configurator.apply(configs);
-        
+
     }
 }
