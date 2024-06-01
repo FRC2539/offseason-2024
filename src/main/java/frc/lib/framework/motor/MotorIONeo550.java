@@ -41,7 +41,11 @@ public class MotorIONeo550 implements MotorIO {
         pidController = motor.getPIDController();
 
         motor.burnFlash();
+
+        initialize();
     }
+
+    protected void initialize() {};
 
     
     public void update() {

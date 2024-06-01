@@ -38,7 +38,11 @@ public class MotorIOTalonSRX implements MotorIO {
         zeroPosition(0);
 
         motor.setNeutralMode(NeutralMode.Brake);
+
+        initialize();
     }
+
+    protected void initialize() {};
 
     
     public void update() {

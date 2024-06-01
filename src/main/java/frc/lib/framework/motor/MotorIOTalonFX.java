@@ -67,7 +67,11 @@ public class MotorIOTalonFX implements MotorIO {
         configurator.apply(torqueCurrentConfigs);
 
         zeroPosition(0);
+
+        initialize();
     }
+
+    protected void initialize() {};
 
     
     public void update() {

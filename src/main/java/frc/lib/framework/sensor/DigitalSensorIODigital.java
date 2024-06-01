@@ -10,7 +10,10 @@ public class DigitalSensorIODigital implements DigitalSensorIO {
 
     public DigitalSensorIODigital(int port) {
         sensor = new DigitalInput(port);
+        initialize();
     }
+
+    protected void initialize() {};
     
     public void update() {
         sensorActivated = sensor.get();
