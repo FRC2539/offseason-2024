@@ -1,0 +1,157 @@
+{
+  "tabPane": [
+    {
+      "title": "SmartDashboard",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "SmartDashboard/",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///robot/transport/sensor/ampMode",
+              "_title": "EOT Sensor",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "5,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Boolean Box",
+              "_source0": "network_table:///robot/transport/sensor/center",
+              "_title": "CT Sensor",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Colors/Color when true": "#7CFC00FF",
+              "Colors/Color when false": "#8B0000FF"
+            }
+          },
+          "6,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///robot/shooterWheels/motor/shooter/wheels/bottomWheelVelocity",
+              "_title": "Bottom Wheel Velocity",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "2,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///robot/shooterWheels/motor/shooter/wheels/topWheelVelocity",
+              "_title": "Top Wheel Velocity",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "2,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///robot/pivot/motor/shooter/pivot/angle",
+              "_title": "Current Pivot Angle",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "3,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Number Bar",
+              "_source0": "network_table:///robot/intake/motor/bottomIntake/wheelSpeed",
+              "_title": "Bottom Intake Speed",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": 0.0,
+              "Range/Max": 100.0,
+              "Range/Center": 0.0,
+              "Visuals/Num tick marks": 5,
+              "Visuals/Show text": true,
+              "Visuals/Orientation": "HORIZONTAL"
+            }
+          },
+          "5,2": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Number Bar",
+              "_source0": "network_table:///robot/intake/motor/topIntake/wheelSpeed",
+              "_title": "Top Intake Speed",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": 0.0,
+              "Range/Max": 100.0,
+              "Range/Center": 0.0,
+              "Visuals/Num tick marks": 5,
+              "Visuals/Show text": true,
+              "Visuals/Orientation": "HORIZONTAL"
+            }
+          },
+          "6,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///robot/pivot/motor/shooter/pivot/setpoint",
+              "_title": "Target Pivot Angle",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
+      }
+    },
+    {
+      "title": "LiveWindow",
+      "autoPopulate": true,
+      "autoPopulatePrefix": "LiveWindow/",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {}
+      }
+    }
+  ],
+  "windowGeometry": {
+    "x": -6.400000095367432,
+    "y": 0.0,
+    "width": 1540.800048828125,
+    "height": 897.5999755859375
+  }
+}

@@ -25,6 +25,11 @@ public class ShooterPivot extends SubsystemBase implements Logged {
         targetAngle = angle;
     }
 
+    public double getShooterAngle()
+    {
+        return pivotMotor.getPosition();
+    }
+
     private void zeroPositionOfPivot()
     {
         pivotMotor.zeroPosition(0);
@@ -51,7 +56,7 @@ public class ShooterPivot extends SubsystemBase implements Logged {
     {
         pivotMotor.update();
 
-        log("motor/shooter/pivot", pivotMotor.getPosition());
-        log("motor/shooter/pivot", targetAngle);
+        log("motor/shooter/pivot/angle", pivotMotor.getPosition());
+        log("motor/shooter/pivot/setpoint", targetAngle);
     }
 }

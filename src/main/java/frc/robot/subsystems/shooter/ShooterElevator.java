@@ -18,7 +18,7 @@ public class ShooterElevator extends SubsystemBase implements Logged {
     public void periodic() {
         elevatorMotor.update();
 
-        log("motor/shooter/elevator", elevatorMotor.getPosition());
+        log("motor/shooter/elevator/position", elevatorMotor.getPosition());
     }
 
     public Command setPosition(double position) {

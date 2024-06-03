@@ -24,8 +24,8 @@ public class IntakeSubsystem extends SubsystemBase implements Logged {
         topIntakeIO.update();
         bottomIntakeIO.update();
 
-        log("motor/topIntake", topIntakeIO.getVelocity());
-        log("motor/bottomIntake", bottomIntakeIO.getVelocity());
+        log("motor/topIntake/wheelSpeed", topIntakeIO.getVelocity());
+        log("motor/bottomIntake/wheelSpeed", bottomIntakeIO.getVelocity());
     }
 
     private void setMotorVoltage(double voltage)
