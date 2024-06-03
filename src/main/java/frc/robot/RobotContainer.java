@@ -33,6 +33,8 @@ public class RobotContainer implements Logged {
   private double MaxSpeed = TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
   private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per secoond max angular velocity
 
+  private final AutoManager autoManager = new AutoManager();
+
   /* Setting up bindings for necessary control of the swerve drive platform */
   private final ThrustmasterJoystick leftJoystick = new ThrustmasterJoystick(0); // My joystick
   private final ThrustmasterJoystick rightJoystick = new ThrustmasterJoystick(1);

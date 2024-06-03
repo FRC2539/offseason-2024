@@ -60,11 +60,17 @@
               1
             ],
             "content": {
-              "_type": "Text View",
+              "_type": "Number Bar",
               "_source0": "network_table:///robot/shooterWheels/motor/shooter/wheels/topWheelVelocity",
               "_title": "Top Wheel Velocity",
               "_glyph": 148,
-              "_showGlyph": false
+              "_showGlyph": false,
+              "Range/Min": 0.0,
+              "Range/Max": 2000.0,
+              "Range/Center": 0.0,
+              "Visuals/Num tick marks": 5,
+              "Visuals/Show text": true,
+              "Visuals/Orientation": "HORIZONTAL"
             }
           },
           "2,1": {
@@ -73,14 +79,17 @@
               1
             ],
             "content": {
-              "_type": "Text View",
+              "_type": "Simple Dial",
               "_source0": "network_table:///robot/pivot/motor/shooter/pivot/angle",
               "_title": "Current Pivot Angle",
               "_glyph": 148,
-              "_showGlyph": false
+              "_showGlyph": false,
+              "Range/Min": 0.0,
+              "Range/Max": 100.0,
+              "Visuals/Show value": true
             }
           },
-          "3,2": {
+          "4,1": {
             "size": [
               2,
               1
@@ -99,7 +108,7 @@
               "Visuals/Orientation": "HORIZONTAL"
             }
           },
-          "5,2": {
+          "6,1": {
             "size": [
               2,
               1
@@ -118,7 +127,7 @@
               "Visuals/Orientation": "HORIZONTAL"
             }
           },
-          "6,1": {
+          "4,2": {
             "size": [
               2,
               1
@@ -135,16 +144,30 @@
       }
     },
     {
-      "title": "LiveWindow",
-      "autoPopulate": true,
-      "autoPopulatePrefix": "LiveWindow/",
+      "title": "Auto",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
       "widgetPane": {
         "gridSize": 128.0,
         "showGrid": true,
         "hgap": 16.0,
         "vgap": 16.0,
         "titleType": 0,
-        "tiles": {}
+        "tiles": {
+          "4,0": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "ComboBox Chooser",
+              "_source0": "network_table:///SmartDashboard/AutoChooser",
+              "_title": "SmartDashboard/AutoChooser",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
       }
     }
   ],
