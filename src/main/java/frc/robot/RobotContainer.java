@@ -72,6 +72,8 @@ public class RobotContainer implements Logged {
 
     rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward());
 
+    rightJoystick.getRightThumb().whileTrue(intake.runIntakeBackward());
+
     leftJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand());
 
     leftJoystick.getTrigger().and(rightJoystick.getTrigger()).whileTrue(transport.runTransportForward().alongWith(shooterWheels.setShooterVelocity(12)));
@@ -85,7 +87,7 @@ public class RobotContainer implements Logged {
     drivetrain.registerTelemetry(logger::telemeterize);
 
     
-    
+
   }
 
   public RobotContainer() {

@@ -1,6 +1,6 @@
 package frc.robot;
 
-public class Constants 
+public class Constants // everything is fake
 {
 
     //Motor Configs
@@ -15,12 +15,13 @@ public class Constants
     public static final int TOP_SHOOTER_WHEELS_MOTOR_PORT = 10;
     public static final int BOTTOM_SHOOTER_WHEELS_MOTOR_PORT = 11;
     
-    static final int PIVOT_MOTOR_PORT = 12;
-    static final int THROUGHBORE_ENCODER_PORT_PIVOT = 13;
+    public static final int PIVOT_MOTOR_PORT = 12;
+    public static final int THROUGHBORE_ENCODER_PORT_PIVOT = 13;
 
 
-    //Prefixed Shot Angles
+    //Prefixed Shooter Angles
     public static final double FRONT_SUBWOOFER_SHOT_ANGLE = 45.0;
     public static final double STAGE_POLE_SHOT_ANGLE = 30.0;
+    public static final double TRANSPORT_TO_AMP_ANGLE = 15.0;
 
 }

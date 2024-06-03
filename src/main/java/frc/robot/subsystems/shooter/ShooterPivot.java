@@ -35,7 +35,7 @@ public class ShooterPivot extends SubsystemBase implements Logged {
         pivotMotor.zeroPosition(0);
     }
 
-    //RADIANS
+    // RADIANS
     public Command setSubwooferAngleCommand()
     {
         return run(() -> setTargetAngle(Constants.FRONT_SUBWOOFER_SHOT_ANGLE));
@@ -44,6 +44,11 @@ public class ShooterPivot extends SubsystemBase implements Logged {
     public Command setStageShotAngleCommand()
     {
         return run(() -> setTargetAngle(Constants.STAGE_POLE_SHOT_ANGLE));
+    }
+
+    public Command setAmpAngleCommand()
+    {
+        return run(() -> setTargetAngle(Constants.TRANSPORT_TO_AMP_ANGLE));
     }
 
     public Command zeroPositionCommand()
