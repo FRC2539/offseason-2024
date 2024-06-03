@@ -7,6 +7,13 @@
       "/SmartDashboard/Module 1": "Mechanism2d",
       "/SmartDashboard/Module 2": "Mechanism2d",
       "/SmartDashboard/Module 3": "Mechanism2d"
+    },
+    "windows": {
+      "/FMSInfo": {
+        "window": {
+          "visible": true
+        }
+      }
     }
   },
   "NetworkTables": {
@@ -15,6 +22,9 @@
         "open": true
       },
       "Pose": {
+        "open": true
+      },
+      "Shuffleboard": {
         "open": true
       },
       "SmartDashboard": {
@@ -37,6 +47,24 @@
           }
         },
         "open": true,
+        "pivot": {
+          "motor": {
+            "open": true,
+            "shooter": {
+              "open": true
+            }
+          },
+          "open": true
+        },
+        "shooterWheels": {
+          "motor": {
+            "open": true,
+            "shooter": {
+              "open": true
+            }
+          },
+          "open": true
+        },
         "transport": {
           "open": true,
           "sensor": {
