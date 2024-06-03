@@ -1,7 +1,10 @@
 package frc.robot;
 
+import com.pathplanner.lib.commands.PathPlannerAuto;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.Command;
 
 public class AutoManager {
 
@@ -19,6 +22,13 @@ public class AutoManager {
         }
 
         SmartDashboard.putData("AutoChooser", autoChooser);
+    }
+
+    //idk if this actually works
+    public Command getAutonomousCommand() {
+        Command chosenPathCommand = new PathPlannerAuto(autoChooser.getSelected().pathName);
+
+        return chosenPathCommand;
     }
 
     private enum AutoOption
