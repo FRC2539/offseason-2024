@@ -10,13 +10,16 @@ import edu.wpi.first.networktables.DoublePublisher;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.networktables.StringPublisher;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.Mechanism2d;
 import edu.wpi.first.wpilibj.smartdashboard.MechanismLigament2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj.util.Color8Bit;
+import monologue.Logged;
+import monologue.Annotations.Log;
 
-public class Telemetry {
+public class Telemetry implements Logged {
     private final double MaxSpeed;
 
     /**
@@ -42,6 +45,9 @@ public class Telemetry {
     private final DoublePublisher velocityY = driveStats.getDoubleTopic("Velocity Y").publish();
     private final DoublePublisher speed = driveStats.getDoubleTopic("Speed").publish();
     private final DoublePublisher odomPeriod = driveStats.getDoubleTopic("Odometry Period").publish();
+
+    @Log
+    private Field2d field2d = new Field2d();
 
     /* Keep a reference of the last pose to calculate the speeds */
     private Pose2d m_lastPose = new Pose2d();
@@ -83,6 +89,9 @@ public class Telemetry {
             pose.getY(),
             pose.getRotation().getDegrees()
         });
+
+        field2d.setRobotPose(pose);
+
 
         /* Telemeterize the robot's general speeds */
         double currentTime = Utils.getCurrentTimeSeconds();
