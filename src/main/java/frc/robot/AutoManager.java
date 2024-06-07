@@ -25,10 +25,10 @@ public class AutoManager {
     }
 
     //idk if this actually works
-    public Command getAutonomousCommand() {
-        Command chosenPathCommand = new PathPlannerAuto(autoChooser.getSelected().pathName);
+    public Command getAutoCommand() {
+         
 
-        return chosenPathCommand;
+        return new PathPlannerAuto(autoChooser.getSelected().pathName);
     }
 
     private enum AutoOption
@@ -85,5 +85,4 @@ public class AutoManager {
             this(startPosition, gamePieces, pathName, displayName, display, "");
         }
     }
-    
 }
