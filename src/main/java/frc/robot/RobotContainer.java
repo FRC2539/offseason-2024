@@ -5,101 +5,106 @@
 package frc.robot;
 
 import com.ctre.phoenix6.Utils;
-import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
-import com.pathplanner.lib.path.PathPlannerPath;
-
+import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
-import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
-import frc.lib.controller.LogitechController;
 import frc.lib.controller.ThrustmasterJoystick;
 import frc.lib.framework.motor.MotorIOTalonSRX;
 import frc.lib.framework.sensor.DigitalSensorIODigital;
 import frc.robot.subsystems.intake.IntakeSubsystem;
-import frc.robot.subsystems.shooter.MotorIOShooterWheels;
 import frc.robot.subsystems.shooter.ShooterPivot;
 import frc.robot.subsystems.shooter.ShooterWheelsSubsystem;
-import frc.robot.subsystems.shooter.ShooterElevator;
-import frc.robot.subsystems.transport.TransportSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.swerve.Telemetry;
+import frc.robot.subsystems.transport.TransportSubsystem;
 import monologue.Logged;
 
 public class RobotContainer implements Logged {
-  private double MaxSpeed = TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
-  private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per secoond max angular velocity
+    private double MaxSpeed = TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
+    private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per secoond max angular velocity
 
-  private final AutoManager autoManager = new AutoManager();
+    private final AutoManager autoManager = new AutoManager();
 
-  /* Setting up bindings for necessary control of the swerve drive platform */
-  private final ThrustmasterJoystick leftJoystick = new ThrustmasterJoystick(0); // My joystick
-  private final ThrustmasterJoystick rightJoystick = new ThrustmasterJoystick(1);
+    /* Setting up bindings for necessary control of the swerve drive platform */
+    private final ThrustmasterJoystick leftJoystick = new ThrustmasterJoystick(0); // My joystick
+    private final ThrustmasterJoystick rightJoystick = new ThrustmasterJoystick(1);
 
-  private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
-  private final TransportSubsystem transport = new TransportSubsystem(new MotorIOTalonSRX(Constants.LEFT_TRANSPORT_MOTOR_PORT), new MotorIOTalonSRX(Constants.RIGHT_TRANSPORT_MOTOR_PORT), new DigitalSensorIODigital(Constants.CENTRAL_TRANSPORT_SENSOR_PORT), new DigitalSensorIODigital(Constants.AMP_MODE_SENSOR_PORT));
-  private final IntakeSubsystem intake = new IntakeSubsystem(new MotorIOTalonSRX(Constants.TOP_INTAKE_MOTOR_PORT), new MotorIOTalonSRX(Constants.BOTTOM_INTAKE_MOTOR_PORT));
-  private final ShooterWheelsSubsystem shooterWheels = new ShooterWheelsSubsystem(Constants.TOP_SHOOTER_WHEELS_MOTOR_PORT, "rio", Constants.BOTTOM_SHOOTER_WHEELS_MOTOR_PORT, "rio");
-  private final ShooterPivot pivot = new ShooterPivot(Constants.PIVOT_MOTOR_PORT, "rio", Constants.THROUGHBORE_ENCODER_PORT_PIVOT);
+    private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
+    private final TransportSubsystem transport = new TransportSubsystem(
+            new MotorIOTalonSRX(Constants.LEFT_TRANSPORT_MOTOR_PORT),
+            new MotorIOTalonSRX(Constants.RIGHT_TRANSPORT_MOTOR_PORT),
+            new DigitalSensorIODigital(Constants.CENTRAL_TRANSPORT_SENSOR_PORT),
+            new DigitalSensorIODigital(Constants.AMP_MODE_SENSOR_PORT));
+    private final IntakeSubsystem intake = new IntakeSubsystem(
+            new MotorIOTalonSRX(Constants.TOP_INTAKE_MOTOR_PORT),
+            new MotorIOTalonSRX(Constants.BOTTOM_INTAKE_MOTOR_PORT));
+    private final ShooterWheelsSubsystem shooterWheels = new ShooterWheelsSubsystem(
+            Constants.TOP_SHOOTER_WHEELS_MOTOR_PORT, "rio", Constants.BOTTOM_SHOOTER_WHEELS_MOTOR_PORT, "rio");
+    private final ShooterPivot pivot =
+            new ShooterPivot(Constants.PIVOT_MOTOR_PORT, "rio", Constants.THROUGHBORE_ENCODER_PORT_PIVOT);
 
+    private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
+            .withDeadband(MaxSpeed * 0.1)
+            .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
+    // driving in open loop
+    private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
+    private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
+    private final Telemetry logger = new Telemetry(MaxSpeed);
 
-  private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-      .withDeadband(MaxSpeed * 0.1).withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
-      .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
-                                                               // driving in open loop
-  private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
-  private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
-  private final Telemetry logger = new Telemetry(MaxSpeed);
+    private void configureBindings() {
+        drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
+                drivetrain.applyRequest(
+                        () -> drive.withVelocityX(-leftJoystick.getYAxis().get() * MaxSpeed) // Drive forward with
+                                // negative Y (forward)
+                                .withVelocityY(
+                                        -leftJoystick.getXAxis().get() * MaxSpeed) // Drive left with negative X (left)
+                                .withRotationalRate(-rightJoystick.getXAxis().get()
+                                        * MaxAngularRate) // Drive counterclockwise with negative X (left)
+                        ));
 
-  private void configureBindings() {
-    drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
-        drivetrain.applyRequest(() -> drive.withVelocityX(-leftJoystick.getYAxis().get() * MaxSpeed) // Drive forward with
-                                                                                           // negative Y (forward)
-            .withVelocityY(-leftJoystick.getXAxis().get() * MaxSpeed) // Drive left with negative X (left)
-            .withRotationalRate(-rightJoystick.getXAxis().get() * MaxAngularRate) // Drive counterclockwise with negative X (left)
-        ));
+        // leftJoystick.getTrigger().whileTrue(drivetrain.applyRequest(() -> brake));
 
-    // leftJoystick.getTrigger().whileTrue(drivetrain.applyRequest(() -> brake));
+        // rightJoystick.getBottomThumb().whileTrue(transport.runTransportForward());
+        // rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward());
 
-    // rightJoystick.getBottomThumb().whileTrue(transport.runTransportForward());
-    // rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward());
+        // //Chain Command - Intake Transport run until reaches end of amp position
+        // joystick.getLeftBumper().onTrue(intake.runIntakeForward().until(() ->
+        // transport.getCentralTransportSensor()).andThen(transport.runTransportForward()).until(() ->
+        // transport.getAmpSideSensor()));
 
-    // //Chain Command - Intake Transport run until reaches end of amp position
-    // joystick.getLeftBumper().onTrue(intake.runIntakeForward().until(() -> transport.getCentralTransportSensor()).andThen(transport.runTransportForward()).until(() -> transport.getAmpSideSensor()));
+        // rightJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand())
 
-    // rightJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand())
+        rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward());
 
-    rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward());
+        rightJoystick.getRightThumb().whileTrue(intake.runIntakeBackward());
 
-    rightJoystick.getRightThumb().whileTrue(intake.runIntakeBackward());
+        leftJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand());
 
-    leftJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand());
+        leftJoystick
+                .getTrigger()
+                .and(rightJoystick.getTrigger())
+                .whileTrue(transport.runTransportForward().alongWith(shooterWheels.setShooterVelocity(12)));
 
-    leftJoystick.getTrigger().and(rightJoystick.getTrigger()).whileTrue(transport.runTransportForward().alongWith(shooterWheels.setShooterVelocity(12)));
+        // reset the field-centric heading on left bumper press
+        rightJoystick.getRightTopRight().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
-    // reset the field-centric heading on left bumper press
-    rightJoystick.getRightTopRight().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
-
-    if (Utils.isSimulation()) {
-      drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
+        if (Utils.isSimulation()) {
+            drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
+        }
+        drivetrain.registerTelemetry(logger::telemeterize);
     }
-    drivetrain.registerTelemetry(logger::telemeterize);
 
-    
+    public RobotContainer() {
+        autoManager.getAutoCommand();
 
-  }
+        configureBindings();
+    }
 
-  public RobotContainer() {
-    autoManager.getAutoCommand();
-
-    configureBindings();
-  }
-
-  public Command getAutonomousCommand() {
-    return autoManager.getAutoCommand();
-  }
+    public Command getAutonomousCommand() {
+        return autoManager.getAutoCommand();
+    }
 }

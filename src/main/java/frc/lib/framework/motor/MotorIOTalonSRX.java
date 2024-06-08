@@ -16,11 +16,9 @@ public class MotorIOTalonSRX implements MotorIO {
     protected double temperature = 0;
     protected double velocity = 0;
 
-
-
     /**
-     * Constructs a new instance of the <code>MotorIOTalonFX</code> class. 
-     * 
+     * Constructs a new instance of the <code>MotorIOTalonFX</code> class.
+     *
      * This also includes all default configurations for motors, such as default current limits.
      *
      * @param port The CAN bus port number to which the Talon FX is connected.
@@ -29,7 +27,6 @@ public class MotorIOTalonSRX implements MotorIO {
         motor = new TalonSRX(port);
 
         config = new TalonSRXConfiguration();
-
 
         motor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 35, 40, 1));
 
@@ -42,9 +39,9 @@ public class MotorIOTalonSRX implements MotorIO {
         initialize();
     }
 
-    protected void initialize() {};
+    protected void initialize() {}
+    ;
 
-    
     public void update() {
         position = motor.getSelectedSensorPosition() / 4096.0 * 2.0 * Math.PI;
         voltage = motor.getMotorOutputVoltage();
@@ -81,7 +78,6 @@ public class MotorIOTalonSRX implements MotorIO {
     public void zeroPosition(double position) {
         motor.setSelectedSensorPosition(position * 4096.0 / (2.0 * Math.PI));
     }
-
 
     public double getPosition() {
         return position;

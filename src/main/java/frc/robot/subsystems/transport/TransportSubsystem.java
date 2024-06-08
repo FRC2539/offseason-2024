@@ -8,15 +8,18 @@ import frc.lib.framework.sensor.DigitalSensorIO;
 import monologue.Logged;
 
 public class TransportSubsystem extends SubsystemBase implements Logged {
-    
+
     private MotorIO leftMotorIO;
     private MotorIO rightMotorIO;
     private DigitalSensorIO centerTransportIO;
     private DigitalSensorIO ampModeIO;
 
-    public TransportSubsystem(MotorIO leftMotorIO, MotorIOTalonSRX rightMotorIO, DigitalSensorIO transportSensorIO, DigitalSensorIO ampModeSensorIO)
-    {
-        
+    public TransportSubsystem(
+            MotorIO leftMotorIO,
+            MotorIOTalonSRX rightMotorIO,
+            DigitalSensorIO transportSensorIO,
+            DigitalSensorIO ampModeSensorIO) {
+
         this.leftMotorIO = leftMotorIO;
         this.rightMotorIO = rightMotorIO;
         this.centerTransportIO = transportSensorIO;
@@ -26,55 +29,46 @@ public class TransportSubsystem extends SubsystemBase implements Logged {
     }
 
     @Override
-    public void periodic()
-    {
+    public void periodic() {
         leftMotorIO.update();
         rightMotorIO.update();
         centerTransportIO.update();
         ampModeIO.update();
-        
-        log("sensor/center" , centerTransportIO.getSensor());
+
+        log("sensor/center", centerTransportIO.getSensor());
         log("sensor/ampMode", ampModeIO.getSensor());
     }
 
-    private void setMotorVoltage(double voltage)
-    {
+    private void setMotorVoltage(double voltage) {
         leftMotorIO.setVoltage(voltage);
         rightMotorIO.setVoltage(voltage);
     }
 
-    public boolean getCentralTransportSensor()
-    {
+    public boolean getCentralTransportSensor() {
         return centerTransportIO.getSensor();
     }
 
-    public boolean getAmpSideSensor()
-    {
+    public boolean getAmpSideSensor() {
         return ampModeIO.getSensor();
     }
 
-    public Command runTransport(double voltage)
-    {
+    public Command runTransport(double voltage) {
         return run(() -> setMotorVoltage(voltage));
     }
 
-    public Command runTransportForward()
-    {
+    public Command runTransportForward() {
         return runTransport(12);
     }
 
-    public Command runTransportReverse()
-    {
+    public Command runTransportReverse() {
         return runTransport(-12);
     }
 
-    public Command stopTransport()
-    {
+    public Command stopTransport() {
         return runTransport(0);
     }
 
-    public Command putPieceInAmpMode()
-    {
+    public Command putPieceInAmpMode() {
         return runTransportForward().until(() -> !ampModeIO.getSensor());
     }
 }

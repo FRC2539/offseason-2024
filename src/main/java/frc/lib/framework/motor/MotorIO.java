@@ -34,9 +34,10 @@ public interface MotorIO {
      *
      * @param  position  the desired position to set
      */
-    default public void setTargetPosition(Rotation2d position) {
+    public default void setTargetPosition(Rotation2d position) {
         setTargetPosition(position.getRadians());
-    };
+    }
+    ;
 
     /**
      * Sets the target velocity of the motor.
@@ -68,9 +69,10 @@ public interface MotorIO {
      *
      * @param  position  the desired position to set
      */
-    default public void zeroPosition(Rotation2d position) {
+    public default void zeroPosition(Rotation2d position) {
         zeroPosition(position.getRadians());
-    };
+    }
+    ;
 
     /**
      * Gets the position of the motor. Defaults to radians.
@@ -84,34 +86,35 @@ public interface MotorIO {
      *
      * @return  the measured position
      */
-    default public Rotation2d getPositionAsRotation2d() {
+    public default Rotation2d getPositionAsRotation2d() {
         return Rotation2d.fromRadians(getPosition());
-    };
+    }
+    ;
 
     /**
      * Gets the voltage of the motor.
-     * 
+     *
      * @return  the measured voltage
      */
     public double getVoltage();
 
     /**
      * Gets the current through the motor.
-     * 
+     *
      * @return  the measured current
      */
     public double getCurrent();
 
     /**
      * Gets the temperature of the motor.
-     * 
+     *
      * @return  the measured temperature
      */
     public double getTemperature();
 
     /**
      * Gets the velocity of the motor.
-     * 
+     *
      * @return the measured velocity
      */
     public double getVelocity();

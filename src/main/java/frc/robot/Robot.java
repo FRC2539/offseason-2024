@@ -6,87 +6,82 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.subsystems.transport.TransportSubsystem;
-import monologue.Monologue;
 import monologue.Logged;
+import monologue.Monologue;
 
 public class Robot extends TimedRobot implements Logged {
-  private Command m_autonomousCommand;
+    private Command m_autonomousCommand;
 
-  private RobotContainer m_robotContainer;
+    private RobotContainer m_robotContainer;
 
-  @Override
-  public void robotInit() {
-    m_robotContainer = new RobotContainer();
+    @Override
+    public void robotInit() {
+        m_robotContainer = new RobotContainer();
 
-    boolean fileOnly = false;
-    boolean lazyLogging = false;
-    Monologue.setupMonologue(m_robotContainer, "robot", fileOnly, lazyLogging);
-  }
-
-  @Override
-  public void robotPeriodic() {
-    CommandScheduler.getInstance().run(); 
-
-    Monologue.setFileOnly(DriverStation.isFMSAttached());
-     // This method needs to be called periodically, or no logging annotations will process properly.
-    Monologue.updateAll();
-
-  }
-
-  @Override
-  public void disabledInit() {}
-
-  @Override
-  public void disabledPeriodic() {}
-
-  @Override
-  public void disabledExit() {}
-
-  @Override
-  public void autonomousInit() {
-    m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.schedule();
+        boolean fileOnly = false;
+        boolean lazyLogging = false;
+        Monologue.setupMonologue(m_robotContainer, "robot", fileOnly, lazyLogging);
     }
-  }
 
-  @Override
-  public void autonomousPeriodic() {}
+    @Override
+    public void robotPeriodic() {
+        CommandScheduler.getInstance().run();
 
-  @Override
-  public void autonomousExit() {}
-
-  @Override
-  public void teleopInit() {
-    if (m_autonomousCommand != null) {
-      m_autonomousCommand.cancel();
+        Monologue.setFileOnly(DriverStation.isFMSAttached());
+        // This method needs to be called periodically, or no logging annotations will process properly.
+        Monologue.updateAll();
     }
-  }
 
-  @Override
-  public void teleopPeriodic() {}
+    @Override
+    public void disabledInit() {}
 
-  @Override
-  public void teleopExit() {}
+    @Override
+    public void disabledPeriodic() {}
 
-  @Override
-  public void testInit() {
-    CommandScheduler.getInstance().cancelAll();
-  }
+    @Override
+    public void disabledExit() {}
 
-  @Override
-  public void testPeriodic() {}
+    @Override
+    public void autonomousInit() {
+        m_autonomousCommand = m_robotContainer.getAutonomousCommand();
 
-  @Override
-  public void testExit() {}
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.schedule();
+        }
+    }
 
-  @Override
-  public void simulationPeriodic() {}
+    @Override
+    public void autonomousPeriodic() {}
 
-  
+    @Override
+    public void autonomousExit() {}
+
+    @Override
+    public void teleopInit() {
+        if (m_autonomousCommand != null) {
+            m_autonomousCommand.cancel();
+        }
+    }
+
+    @Override
+    public void teleopPeriodic() {}
+
+    @Override
+    public void teleopExit() {}
+
+    @Override
+    public void testInit() {
+        CommandScheduler.getInstance().cancelAll();
+    }
+
+    @Override
+    public void testPeriodic() {}
+
+    @Override
+    public void testExit() {}
+
+    @Override
+    public void simulationPeriodic() {}
 }

@@ -1,13 +1,8 @@
 package frc.robot.subsystems.shooter;
 
-import javax.crypto.KeyGenerator;
-
 import com.ctre.phoenix6.configs.Slot0Configs;
 import com.ctre.phoenix6.configs.TalonFXConfigurator;
 import com.ctre.phoenix6.signals.GravityTypeValue;
-import com.fasterxml.jackson.databind.KeyDeserializer;
-
-import edu.wpi.first.wpilibj.DutyCycleEncoder;
 import frc.lib.framework.motor.MotorIOTalonFX;
 
 public class MotorIOShooterElevator extends MotorIOTalonFX {
@@ -19,14 +14,9 @@ public class MotorIOShooterElevator extends MotorIOTalonFX {
         Slot0Configs configs = new Slot0Configs();
 
         configs.GravityType = GravityTypeValue.Elevator_Static;
-        configs.kP = 0.45; //fix valules later, incorrect
-        configs.kD = 1; //fix valules later, incorrect
-        configs.kG = 6.88; //fix valules later, incorrect
+        configs.kP = 0.45; // fix valules later, incorrect
+        configs.kD = 1; // fix valules later, incorrect
+        configs.kG = 6.88; // fix valules later, incorrect
         configurator.apply(configs);
-
     }
-
-
-
-
 }
