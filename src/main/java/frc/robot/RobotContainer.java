@@ -13,6 +13,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
 import frc.lib.controller.ThrustmasterJoystick;
 import frc.lib.framework.motor.MotorIOTalonSRX;
+import frc.lib.framework.motor.factory.MotorFactory;
 import frc.lib.framework.sensor.DigitalSensorIODigital;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.shooter.ShooterPivot;
@@ -26,8 +27,6 @@ public class RobotContainer implements Logged {
     private double MaxSpeed = TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
     private double MaxAngularRate = 1.5 * Math.PI; // 3/4 of a rotation per secoond max angular velocity
 
-    private final AutoManager autoManager = new AutoManager();
-
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final ThrustmasterJoystick leftJoystick = new ThrustmasterJoystick(0); // My joystick
     private final ThrustmasterJoystick rightJoystick = new ThrustmasterJoystick(1);
@@ -35,11 +34,11 @@ public class RobotContainer implements Logged {
     private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
     private final TransportSubsystem transport = new TransportSubsystem(
             new MotorIOTalonSRX(Constants.LEFT_TRANSPORT_MOTOR_PORT),
-            new MotorIOTalonSRX(Constants.RIGHT_TRANSPORT_MOTOR_PORT),
+            new MotorFactory(new MotorIOTalonSRX(Constants.RIGHT_TRANSPORT_MOTOR_PORT)).withInvert().getMotor(),
             new DigitalSensorIODigital(Constants.CENTRAL_TRANSPORT_SENSOR_PORT),
             new DigitalSensorIODigital(Constants.AMP_MODE_SENSOR_PORT));
     private final IntakeSubsystem intake = new IntakeSubsystem(
-            new MotorIOTalonSRX(Constants.TOP_INTAKE_MOTOR_PORT),
+            new MotorFactory(new MotorIOTalonSRX(Constants.TOP_INTAKE_MOTOR_PORT)).withInvert().getMotor(),
             new MotorIOTalonSRX(Constants.BOTTOM_INTAKE_MOTOR_PORT));
     private final ShooterWheelsSubsystem shooterWheels = new ShooterWheelsSubsystem(
             Constants.TOP_SHOOTER_WHEELS_MOTOR_PORT, "rio", Constants.BOTTOM_SHOOTER_WHEELS_MOTOR_PORT, "rio");
@@ -47,13 +46,15 @@ public class RobotContainer implements Logged {
             new ShooterPivot(Constants.PIVOT_MOTOR_PORT, "rio", Constants.THROUGHBORE_ENCODER_PORT_PIVOT);
 
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
-            .withDeadband(MaxSpeed * 0.1)
-            .withRotationalDeadband(MaxAngularRate * 0.1) // Add a 10% deadband
+            .withDeadband(MaxSpeed * 0.01)
+            .withRotationalDeadband(MaxAngularRate * 0.01) // Add a 10% deadband
             .withDriveRequestType(DriveRequestType.OpenLoopVoltage); // I want field-centric
     // driving in open loop
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     private final Telemetry logger = new Telemetry(MaxSpeed);
+
+    private final AutoManager autoManager = new AutoManager();
 
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -99,12 +100,10 @@ public class RobotContainer implements Logged {
     }
 
     public RobotContainer() {
-        autoManager.getAutoCommand();
-
         configureBindings();
     }
 
     public Command getAutonomousCommand() {
-        return autoManager.getAutoCommand();
+        return autoManager.getAutonomousCommand();
     }
 }

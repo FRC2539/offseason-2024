@@ -23,9 +23,10 @@ public class AutoManager {
     }
 
     // idk if this actually works
-    public Command getAutoCommand() {
+    public Command getAutonomousCommand() {
+        Command chosenPathCommand = new PathPlannerAuto(autoChooser.getSelected().pathName);
 
-        return new PathPlannerAuto(autoChooser.getSelected().pathName);
+        return chosenPathCommand;
     }
 
     private enum AutoOption {

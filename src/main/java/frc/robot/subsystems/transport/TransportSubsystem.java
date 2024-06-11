@@ -3,7 +3,6 @@ package frc.robot.subsystems.transport;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.framework.motor.MotorIO;
-import frc.lib.framework.motor.MotorIOTalonSRX;
 import frc.lib.framework.sensor.DigitalSensorIO;
 import monologue.Logged;
 
@@ -16,7 +15,7 @@ public class TransportSubsystem extends SubsystemBase implements Logged {
 
     public TransportSubsystem(
             MotorIO leftMotorIO,
-            MotorIOTalonSRX rightMotorIO,
+            MotorIO rightMotorIO,
             DigitalSensorIO transportSensorIO,
             DigitalSensorIO ampModeSensorIO) {
 
@@ -56,11 +55,11 @@ public class TransportSubsystem extends SubsystemBase implements Logged {
         return run(() -> setMotorVoltage(voltage));
     }
 
-    public Command runTransportForward() {
+    public Command runTransportReverse() {
         return runTransport(12);
     }
 
-    public Command runTransportReverse() {
+    public Command runTransportForward() {
         return runTransport(-12);
     }
 

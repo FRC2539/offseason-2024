@@ -57,7 +57,7 @@ public class MotorIOTalonSRX implements MotorIO {
 
     public void setVoltage(double voltage) {
         motor.enableVoltageCompensation(true);
-        motor.set(TalonSRXControlMode.PercentOutput, voltage * 12);
+        motor.set(TalonSRXControlMode.PercentOutput, voltage / 12.0);
     }
 
     public void setTargetPosition(double position) {

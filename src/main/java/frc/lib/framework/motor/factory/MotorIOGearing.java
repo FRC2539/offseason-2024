@@ -24,11 +24,11 @@ public class MotorIOGearing implements MotorIO {
     }
 
     public void setDutyCycle(double dutyCycle) {
-        motor.setDutyCycle(dutyCycle);
+        motor.setDutyCycle(dutyCycle * Math.signum(gearReduction));
     }
 
     public void setVoltage(double voltage) {
-        motor.setVoltage(voltage);
+        motor.setVoltage(voltage * Math.signum(gearReduction));
     }
 
     public void setTargetPosition(double position) {
@@ -40,7 +40,7 @@ public class MotorIOGearing implements MotorIO {
     }
 
     public void setTargetCurrent(double torque) {
-        motor.setTargetVelocity(torque);
+        motor.setTargetVelocity(torque * Math.signum(gearReduction));
     }
 
     public void zeroPosition(double position) {
@@ -52,11 +52,11 @@ public class MotorIOGearing implements MotorIO {
     }
 
     public double getVoltage() {
-        return motor.getVoltage();
+        return motor.getVoltage() * Math.signum(gearReduction);
     }
 
     public double getCurrent() {
-        return motor.getCurrent();
+        return motor.getCurrent() * Math.signum(gearReduction);
     }
 
     public double getTemperature() {
