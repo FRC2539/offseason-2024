@@ -27,10 +27,12 @@ public class MotorIOTalonSRX implements MotorIO {
         motor = new TalonSRX(port);
 
         config = new TalonSRXConfiguration();
+        
+        motor.configAllSettings(config);
 
         motor.configSupplyCurrentLimit(new SupplyCurrentLimitConfiguration(true, 35, 40, 1));
+        motor.configVoltageCompSaturation(12);
 
-        motor.configAllSettings(config);
 
         zeroPosition(0);
 
