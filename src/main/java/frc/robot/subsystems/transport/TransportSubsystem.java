@@ -34,33 +34,33 @@ public class TransportSubsystem extends SubsystemBase implements Logged {
         centerTransportIO.update();
         ampModeIO.update();
 
-        log("sensor/center", centerTransportIO.getSensor());
-        log("sensor/ampMode", ampModeIO.getSensor());
+        log("sensor/center", !centerTransportIO.getSensor());
+        log("sensor/ampMode", !ampModeIO.getSensor());
     }
 
-    private void setMotorVoltage(double voltage) {
-        leftMotorIO.setVoltage(voltage);
-        rightMotorIO.setVoltage(voltage);
+    private void setMotorVoltage(double percent) {
+        leftMotorIO.setDutyCycle(percent);
+        rightMotorIO.setDutyCycle(percent);
     }
 
     public boolean getCentralTransportSensor() {
-        return centerTransportIO.getSensor();
+        return !centerTransportIO.getSensor();
     }
 
     public boolean getAmpSideSensor() {
-        return ampModeIO.getSensor();
+        return !ampModeIO.getSensor();
     }
 
-    public Command runTransport(double voltage) {
-        return run(() -> setMotorVoltage(voltage));
+    public Command runTransport(double percent) {
+        return run(() -> setMotorVoltage(percent));
     }
 
     public Command runTransportReverse() {
-        return runTransport(12);
+        return runTransport(0.15);
     }
 
     public Command runTransportForward() {
-        return runTransport(-12);
+        return runTransport(-0.15);
     }
 
     public Command stopTransport() {

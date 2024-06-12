@@ -26,21 +26,21 @@ public class IntakeSubsystem extends SubsystemBase implements Logged {
         log("motor/bottomIntake/wheelSpeed", bottomIntakeIO.getVelocity());
     }
 
-    private void setMotorVoltage(double voltage) {
-        topIntakeIO.setVoltage(voltage);
-        bottomIntakeIO.setVoltage(voltage);
+    private void setMotorPercent(double percent) {
+        topIntakeIO.setVoltage(percent);
+        bottomIntakeIO.setVoltage(percent);
     }
 
-    public Command runIntake(double voltage) {
-        return run(() -> setMotorVoltage(voltage));
-    }
-
-    public Command runIntakeForward() {
-        return runIntake(12);
+    public Command runIntake(double percent) {
+        return run(() -> setMotorPercent(percent));
     }
 
     public Command runIntakeBackward() {
-        return runIntake(-12);
+        return runIntake(0.9);
+    }
+
+    public Command runIntakeForward() {
+        return runIntake(-0.9);
     }
 
     public Command stopIntake() {

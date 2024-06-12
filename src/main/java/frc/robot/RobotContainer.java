@@ -79,9 +79,9 @@ public class RobotContainer implements Logged {
 
         // rightJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand())
 
-        rightJoystick.getLeftThumb().whileTrue(intake.runIntakeBackward());
+        rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward());
 
-        rightJoystick.getRightThumb().whileTrue(intake.runIntakeForward());
+        rightJoystick.getRightThumb().whileTrue(intake.runIntakeBackward());
 
         leftJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand());
 
