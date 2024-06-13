@@ -1,8 +1,8 @@
 package frc.robot.subsystems.shooter;
 
-import frc.lib.framework.motor.MotorIO;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.lib.framework.motor.MotorIO;
 import monologue.Logged;
 
 public class ShooterElevator extends SubsystemBase implements Logged {
@@ -11,7 +11,6 @@ public class ShooterElevator extends SubsystemBase implements Logged {
 
     public ShooterElevator(int port, String canbus) {
         elevatorMotor = new MotorIOShooterElevator(port, canbus);
-
     }
 
     @Override
@@ -35,7 +34,7 @@ public class ShooterElevator extends SubsystemBase implements Logged {
 
     public Command shotPosition() {
         return run(() -> {
-            elevatorMotor.setTargetPosition(5); //arbitrary random number
+            elevatorMotor.setTargetPosition(5); // arbitrary random number
         });
     }
 

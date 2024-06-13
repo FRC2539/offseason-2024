@@ -3,11 +3,9 @@ package frc.lib.framework.motor;
 import com.revrobotics.CANSparkBase.ControlType;
 import com.revrobotics.CANSparkBase.IdleMode;
 import com.revrobotics.CANSparkLowLevel.MotorType;
-
-import edu.wpi.first.math.util.Units;
-
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.SparkPIDController;
+import edu.wpi.first.math.util.Units;
 
 public class MotorIONeo550 implements MotorIO {
     protected CANSparkMax motor;
@@ -21,8 +19,8 @@ public class MotorIONeo550 implements MotorIO {
     protected double velocity = 0;
 
     /**
-     * Constructs a new instance of the <code>MotorIOTalonFX</code> class. 
-     * 
+     * Constructs a new instance of the <code>MotorIOTalonFX</code> class.
+     *
      * This also includes all default configurations for motors, such as default current limits.
      *
      * @param port The CAN bus port number to which the Talon FX is connected.
@@ -45,9 +43,9 @@ public class MotorIONeo550 implements MotorIO {
         initialize();
     }
 
-    protected void initialize() {};
+    protected void initialize() {}
+    ;
 
-    
     public void update() {
         position = Units.rotationsToRadians(motor.getEncoder().getPosition());
         voltage = motor.getAppliedOutput() * motor.getBusVoltage();
@@ -79,7 +77,6 @@ public class MotorIONeo550 implements MotorIO {
     public void zeroPosition(double position) {
         motor.getEncoder().setPosition(position);
     }
-
 
     public double getPosition() {
         return position;

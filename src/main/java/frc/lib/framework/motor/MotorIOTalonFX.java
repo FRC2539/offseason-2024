@@ -10,7 +10,6 @@ import com.ctre.phoenix6.controls.TorqueCurrentFOC;
 import com.ctre.phoenix6.controls.VelocityVoltage;
 import com.ctre.phoenix6.controls.VoltageOut;
 import com.ctre.phoenix6.hardware.TalonFX;
-
 import edu.wpi.first.math.util.Units;
 
 public class MotorIOTalonFX implements MotorIO {
@@ -35,8 +34,8 @@ public class MotorIOTalonFX implements MotorIO {
     protected VelocityVoltage velocityVoltage = new VelocityVoltage(0);
 
     /**
-     * Constructs a new instance of the <code>MotorIOTalonFX</code> class. 
-     * 
+     * Constructs a new instance of the <code>MotorIOTalonFX</code> class.
+     *
      * This also includes all default configurations for motors, such as default current limits.
      *
      * @param port The CAN bus port number to which the Talon FX is connected.
@@ -71,9 +70,9 @@ public class MotorIOTalonFX implements MotorIO {
         initialize();
     }
 
-    protected void initialize() {};
+    protected void initialize() {}
+    ;
 
-    
     public void update() {
         position = Units.rotationsToRadians(positionSignal.refresh().getValueAsDouble());
         voltage = voltageSignal.refresh().getValueAsDouble();
@@ -105,7 +104,6 @@ public class MotorIOTalonFX implements MotorIO {
     public void zeroPosition(double position) {
         motor.setPosition(Units.radiansToRotations(position));
     }
-
 
     public double getPosition() {
         return position;

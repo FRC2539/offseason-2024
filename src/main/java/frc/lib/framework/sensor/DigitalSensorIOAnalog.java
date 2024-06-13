@@ -17,8 +17,9 @@ public class DigitalSensorIOAnalog implements DigitalSensorIO {
         initialize();
     }
 
-    protected void initialize() {};
-    
+    protected void initialize() {}
+    ;
+
     public void update() {
         sensorActivated = sensor.getValue() > 50;
     }

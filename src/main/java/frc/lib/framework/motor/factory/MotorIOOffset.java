@@ -4,12 +4,13 @@ import frc.lib.framework.motor.MotorIO;
 
 public class MotorIOOffset implements MotorIO {
     /**
-     * Constructs a new instance of the <code>MotorIOGearing</code> class. 
+     * Constructs a new instance of the <code>MotorIOGearing</code> class.
      *
      * @param motor The motor to control.
      * @param offset The amount that feedback from the motor should be offset.
      */
     private MotorIO motor;
+
     private double offset;
 
     public MotorIOOffset(MotorIO motor, double offset) {
@@ -17,7 +18,6 @@ public class MotorIOOffset implements MotorIO {
         this.offset = offset;
     }
 
-    
     public void update() {
         this.motor.update();
     }
@@ -45,7 +45,6 @@ public class MotorIOOffset implements MotorIO {
     public void zeroPosition(double position) {
         motor.zeroPosition(position + offset);
     }
-
 
     public double getPosition() {
         return motor.getPosition() - offset;

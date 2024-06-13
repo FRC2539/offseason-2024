@@ -18,8 +18,9 @@ public class AnalogSensorIOAnalog implements AnalogSensorIO {
         initialize();
     }
 
-    protected void initialize() {};
-    
+    protected void initialize() {}
+    ;
+
     public void update() {
         sensorValue = sensor.getValue();
     }

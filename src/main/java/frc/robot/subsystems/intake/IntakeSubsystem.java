@@ -1,17 +1,16 @@
 package frc.robot.subsystems.intake;
 
+import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.framework.motor.MotorIO;
 import monologue.Logged;
-import edu.wpi.first.wpilibj2.command.Command;
 
 public class IntakeSubsystem extends SubsystemBase implements Logged {
-    
+
     private MotorIO topIntakeIO;
     private MotorIO bottomIntakeIO;
 
-    public IntakeSubsystem(MotorIO topIntakeMotor, MotorIO bottomIntakeMotor)
-    {
+    public IntakeSubsystem(MotorIO topIntakeMotor, MotorIO bottomIntakeMotor) {
         this.topIntakeIO = topIntakeMotor;
         this.bottomIntakeIO = bottomIntakeMotor;
 
@@ -19,8 +18,7 @@ public class IntakeSubsystem extends SubsystemBase implements Logged {
     }
 
     @Override
-    public void periodic()
-    {
+    public void periodic() {
         topIntakeIO.update();
         bottomIntakeIO.update();
 
@@ -28,31 +26,24 @@ public class IntakeSubsystem extends SubsystemBase implements Logged {
         log("motor/bottomIntake/wheelSpeed", bottomIntakeIO.getVelocity());
     }
 
-    private void setMotorVoltage(double voltage)
-    {
-        topIntakeIO.setVoltage(voltage);
-        bottomIntakeIO.setVoltage(voltage);
-    }
-    
-    public Command runIntake(double voltage)
-    {
-        return run(() -> setMotorVoltage(voltage));
+    private void setMotorPercent(double percent) {
+        topIntakeIO.setVoltage(percent);
+        bottomIntakeIO.setVoltage(percent);
     }
 
-    public Command runIntakeForward()
-    {
-        return runIntake(12);
-    }
-  
-    public Command runIntakeBackward()
-    {
-        return runIntake(-12);
+    public Command runIntake(double percent) {
+        return run(() -> setMotorPercent(percent));
     }
 
-     public Command stopIntake()
-    {
+    public Command runIntakeBackward() {
+        return runIntake(0.9);
+    }
+
+    public Command runIntakeForward() {
+        return runIntake(-0.9);
+    }
+
+    public Command stopIntake() {
         return runIntake(0);
     }
-
-
 }

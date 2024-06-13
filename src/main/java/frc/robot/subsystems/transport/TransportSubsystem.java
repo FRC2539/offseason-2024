@@ -3,20 +3,22 @@ package frc.robot.subsystems.transport;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.lib.framework.motor.MotorIO;
-import frc.lib.framework.motor.MotorIOTalonSRX;
 import frc.lib.framework.sensor.DigitalSensorIO;
 import monologue.Logged;
 
 public class TransportSubsystem extends SubsystemBase implements Logged {
-    
+
     private MotorIO leftMotorIO;
     private MotorIO rightMotorIO;
     private DigitalSensorIO centerTransportIO;
     private DigitalSensorIO ampModeIO;
 
-    public TransportSubsystem(MotorIO leftMotorIO, MotorIOTalonSRX rightMotorIO, DigitalSensorIO transportSensorIO, DigitalSensorIO ampModeSensorIO)
-    {
-        
+    public TransportSubsystem(
+            MotorIO leftMotorIO,
+            MotorIO rightMotorIO,
+            DigitalSensorIO transportSensorIO,
+            DigitalSensorIO ampModeSensorIO) {
+
         this.leftMotorIO = leftMotorIO;
         this.rightMotorIO = rightMotorIO;
         this.centerTransportIO = transportSensorIO;
@@ -26,55 +28,46 @@ public class TransportSubsystem extends SubsystemBase implements Logged {
     }
 
     @Override
-    public void periodic()
-    {
+    public void periodic() {
         leftMotorIO.update();
         rightMotorIO.update();
         centerTransportIO.update();
         ampModeIO.update();
-        
-        log("sensor/center" , centerTransportIO.getSensor());
-        log("sensor/ampMode", ampModeIO.getSensor());
+
+        log("sensor/center", !centerTransportIO.getSensor());
+        log("sensor/ampMode", !ampModeIO.getSensor());
     }
 
-    private void setMotorVoltage(double voltage)
-    {
-        leftMotorIO.setVoltage(voltage);
-        rightMotorIO.setVoltage(voltage);
+    private void setMotorVoltage(double percent) {
+        leftMotorIO.setDutyCycle(percent);
+        rightMotorIO.setDutyCycle(percent);
     }
 
-    public boolean getCentralTransportSensor()
-    {
-        return centerTransportIO.getSensor();
+    public boolean getCentralTransportSensor() {
+        return !centerTransportIO.getSensor();
     }
 
-    public boolean getAmpSideSensor()
-    {
-        return ampModeIO.getSensor();
+    public boolean getAmpSideSensor() {
+        return !ampModeIO.getSensor();
     }
 
-    public Command runTransport(double voltage)
-    {
-        return run(() -> setMotorVoltage(voltage));
+    public Command runTransport(double percent) {
+        return run(() -> setMotorVoltage(percent));
     }
 
-    public Command runTransportForward()
-    {
-        return runTransport(12);
+    public Command runTransportReverse() {
+        return runTransport(0.15);
     }
 
-    public Command runTransportReverse()
-    {
-        return runTransport(-12);
+    public Command runTransportForward() {
+        return runTransport(-0.15);
     }
 
-    public Command stopTransport()
-    {
+    public Command stopTransport() {
         return runTransport(0);
     }
 
-    public Command putPieceInAmpMode()
-    {
+    public Command putPieceInAmpMode() {
         return runTransportForward().until(() -> !ampModeIO.getSensor());
     }
 }
