@@ -58,13 +58,16 @@ public class RobotContainer implements Logged {
     private final AutoManager autoManager = new AutoManager();
 
     private void configureBindings() {
+
+        
+
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(
                         () -> drive.withVelocityX(-leftJoystick.getYAxis().get() * MaxSpeed) // Drive forward with
                                 // negative Y (forward)
                                 .withVelocityY(
                                         -leftJoystick.getXAxis().get() * MaxSpeed) // Drive left with negative X (left)
-                                .withRotationalRate(-rightJoystick.getXAxis().get()
+                                .withRotationalRate(rightJoystick.getXAxis().get()
                                         * MaxAngularRate) // Drive counterclockwise with negative X (left)
                         ));
 
