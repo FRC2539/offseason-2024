@@ -47,6 +47,7 @@ public class RobotContainer implements Logged {
             Constants.TOP_SHOOTER_WHEELS_MOTOR_PORT, "rio", Constants.BOTTOM_SHOOTER_WHEELS_MOTOR_PORT, "rio");
     private final ShooterPivot pivot =
             new ShooterPivot(Constants.PIVOT_MOTOR_PORT, "rio", Constants.THROUGHBORE_ENCODER_PORT_PIVOT);
+  // private final ShooterElevator shooterElevator = new ShooterElevator(0, null)
 
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.01)
@@ -118,4 +119,30 @@ public class RobotContainer implements Logged {
     public Command getAutonomousCommand() {
         return autoManager.getAutonomousCommand();
     }
+
+  // added for the purpose of automanager but tbh idrk what i'm doing
+  public CommandSwerveDrivetrain getDrivetrain() {
+    return drivetrain;
+  }
+
+  public TransportSubsystem getTransportSubsystem() {
+    return transport;
+  }
+
+  public IntakeSubsystem getIntakeSubsystem() {
+    return intake;
+  }
+
+  public ShooterPivot getShooterPivot() {
+    return pivot;
+  }
+
+  // public ShooterElevator getShooterElevator() {
+  //   return shooterElevator;
+  // }
+
+  public ShooterWheelsSubsystem getShooterWheelsSubsystem() {
+    return shooterWheels;
+  }
+
 }
