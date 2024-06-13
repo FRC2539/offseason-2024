@@ -25,6 +25,8 @@ public class Constants // everything is fake
     public static final double STAGE_POLE_SHOT_ANGLE = 30.0;
     public static final double TRANSPORT_TO_AMP_ANGLE = 15.0;
 
+    public static final boolean competitionMode = false;
+
 
     //Swerve
     public static final double maxSpeed = 10.0;

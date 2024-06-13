@@ -40,6 +40,10 @@ public class ShooterWheelsSubsystem extends SubsystemBase implements Logged {
         topShooterIO.setTargetVelocity(velocity);
         bottomShooterIO.setTargetVelocity(velocity);
     }
+    private void setDualWheelVelocity(double topVelocity, double bottomVelocity) {
+        topShooterIO.setTargetVelocity(topVelocity);
+        bottomShooterIO.setTargetVelocity(bottomVelocity);
+    }
 
     public double getTopShooterRPM() {
         return topShooterIO.getVelocity() / (2 * Math.PI);
@@ -51,6 +55,10 @@ public class ShooterWheelsSubsystem extends SubsystemBase implements Logged {
 
     public Command setShooterVelocity(double velocityInRotPerSec) {
         return run(() -> setWheelVelocity(velocityInRotPerSec * Math.PI * 2));
+    }
+
+    public Command setTwoWheelVelocity(double topVelocityInRotPerSec, double bottomVelocityInRotPerSec) {
+        return run(() -> setDualWheelVelocity(topVelocityInRotPerSec * Math.PI * 2, bottomVelocityInRotPerSec * Math.PI * 2));
     }
 
     public Command stopShooterWheels() {

@@ -22,6 +22,9 @@ import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.swerve.Telemetry;
 import frc.robot.subsystems.transport.TransportSubsystem;
 import monologue.Logged;
+import frc.lib.logging.LoggedReceiver;
+import frc.lib.logging.Logger;
+
 
 public class RobotContainer implements Logged {
     private double MaxSpeed = TunerConstants.kSpeedAt12VoltsMps; // kSpeedAt12VoltsMps desired top speed
@@ -81,6 +84,10 @@ public class RobotContainer implements Logged {
         // transport.getAmpSideSensor()));
 
         // rightJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand())
+
+        LoggedReceiver topRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/topTunable", .6d);
+        LoggedReceiver bottomRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/bottomTunable", .6d);
+        LoggedReceiver pivotAngleTunable = Logger.tunable("/ShooterSubsystem/pivotTunable", 60d);
 
         rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward());
 
