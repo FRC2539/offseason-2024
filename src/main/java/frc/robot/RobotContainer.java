@@ -85,8 +85,8 @@ public class RobotContainer implements Logged {
 
         // rightJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand())
 
-        LoggedReceiver topRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/topTunable", 12d);
-        LoggedReceiver bottomRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/bottomTunable", 12d);
+        LoggedReceiver topRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/topTunable", 10d);
+        LoggedReceiver bottomRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/bottomTunable", 10d);
 
         rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward().alongWith(transport.runTransportForward()).until(() -> transport.getCentralTransportSensor()));
 
@@ -105,6 +105,8 @@ public class RobotContainer implements Logged {
 
         // reset the field-centric heading on left bumper press
         rightJoystick.getRightTopRight().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+
+        rightJoystick.getTrigger().whileTrue(intake.runIntakeForward().alongWith(transport.runTransportForward()).until(() -> transport.getCentralTransportSensor()));
 
         if (Utils.isSimulation()) {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));

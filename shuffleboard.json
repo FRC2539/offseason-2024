@@ -1,7 +1,7 @@
 {
   "tabPane": [
     {
-      "title": "SmartDashboard",
+      "title": "Teleoperated",
       "autoPopulate": false,
       "autoPopulatePrefix": "SmartDashboard/",
       "widgetPane": {
@@ -11,22 +11,7 @@
         "vgap": 16.0,
         "titleType": 0,
         "tiles": {
-          "4,0": {
-            "size": [
-              1,
-              1
-            ],
-            "content": {
-              "_type": "Boolean Box",
-              "_source0": "network_table:///robot/transport/sensor/ampMode",
-              "_title": "EOT Sensor",
-              "_glyph": 148,
-              "_showGlyph": false,
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
-            }
-          },
-          "5,0": {
+          "7,2": {
             "size": [
               1,
               1
@@ -34,27 +19,33 @@
             "content": {
               "_type": "Boolean Box",
               "_source0": "network_table:///robot/transport/sensor/center",
-              "_title": "CT Sensor",
+              "_title": "Has Peice",
               "_glyph": 148,
               "_showGlyph": false,
-              "Colors/Color when true": "#7CFC00FF",
-              "Colors/Color when false": "#8B0000FF"
+              "Colors/Color when true": "#FFB366FF",
+              "Colors/Color when false": "#000000FF"
             }
           },
-          "6,0": {
+          "4,0": {
             "size": [
               2,
               1
             ],
             "content": {
-              "_type": "Text View",
+              "_type": "Number Bar",
               "_source0": "network_table:///robot/shooterWheels/motor/shooter/wheels/bottomWheelVelocity",
               "_title": "Bottom Wheel Velocity",
               "_glyph": 148,
-              "_showGlyph": false
+              "_showGlyph": false,
+              "Range/Min": -1.0,
+              "Range/Max": 1.0,
+              "Range/Center": 0.0,
+              "Visuals/Num tick marks": 5,
+              "Visuals/Show text": true,
+              "Visuals/Orientation": "HORIZONTAL"
             }
           },
-          "2,0": {
+          "6,0": {
             "size": [
               2,
               1
@@ -73,10 +64,10 @@
               "Visuals/Orientation": "HORIZONTAL"
             }
           },
-          "2,1": {
+          "2,0": {
             "size": [
               2,
-              1
+              2
             ],
             "content": {
               "_type": "Simple Dial",
@@ -89,7 +80,7 @@
               "Visuals/Show value": true
             }
           },
-          "4,1": {
+          "6,1": {
             "size": [
               2,
               1
@@ -108,7 +99,7 @@
               "Visuals/Orientation": "HORIZONTAL"
             }
           },
-          "6,1": {
+          "4,1": {
             "size": [
               2,
               1
@@ -127,17 +118,20 @@
               "Visuals/Orientation": "HORIZONTAL"
             }
           },
-          "4,2": {
+          "0,0": {
             "size": [
               2,
-              1
+              2
             ],
             "content": {
-              "_type": "Text View",
+              "_type": "Simple Dial",
               "_source0": "network_table:///robot/pivot/motor/shooter/pivot/setpoint",
               "_title": "Target Pivot Angle",
               "_glyph": 148,
-              "_showGlyph": false
+              "_showGlyph": false,
+              "Range/Min": 0.0,
+              "Range/Max": 100.0,
+              "Visuals/Show value": true
             }
           }
         }
@@ -169,12 +163,52 @@
           }
         }
       }
+    },
+    {
+      "title": "Configs",
+      "autoPopulate": false,
+      "autoPopulatePrefix": "",
+      "widgetPane": {
+        "gridSize": 128.0,
+        "showGrid": true,
+        "hgap": 16.0,
+        "vgap": 16.0,
+        "titleType": 0,
+        "tiles": {
+          "3,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///ShooterSubsystem/bottomTunable",
+              "_title": "/ShooterSubsystem/bottomTunable",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///ShooterSubsystem/topTunable",
+              "_title": "/ShooterSubsystem/topTunable",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          }
+        }
+      }
     }
   ],
   "windowGeometry": {
-    "x": -6.400000095367432,
-    "y": 0.0,
-    "width": 1540.800048828125,
-    "height": 897.5999755859375
+    "x": 0.0,
+    "y": 17.33333396911621,
+    "width": 1297.3333740234375,
+    "height": 737.3333129882812
   }
 }
