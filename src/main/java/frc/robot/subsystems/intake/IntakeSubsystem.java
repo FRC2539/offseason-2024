@@ -27,8 +27,8 @@ public class IntakeSubsystem extends SubsystemBase implements Logged {
     }
 
     private void setMotorPercent(double percent) {
-        topIntakeIO.setVoltage(percent);
-        bottomIntakeIO.setVoltage(percent);
+        topIntakeIO.setDutyCycle(percent);
+        bottomIntakeIO.setDutyCycle(percent);
     }
 
     public Command runIntake(double percent) {
@@ -36,11 +36,11 @@ public class IntakeSubsystem extends SubsystemBase implements Logged {
     }
 
     public Command runIntakeBackward() {
-        return runIntake(0.9);
+        return runIntake(0.75);
     }
 
     public Command runIntakeForward() {
-        return runIntake(-0.9);
+        return runIntake(-0.75);
     }
 
     public Command stopIntake() {
