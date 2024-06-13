@@ -11,6 +11,7 @@ import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.lib.controller.LogitechController;
 import frc.lib.controller.ThrustmasterJoystick;
 import frc.lib.framework.motor.MotorIOTalonSRX;
 import frc.lib.framework.motor.factory.MotorFactory;
@@ -33,6 +34,7 @@ public class RobotContainer implements Logged {
     /* Setting up bindings for necessary control of the swerve drive platform */
     private final ThrustmasterJoystick leftJoystick = new ThrustmasterJoystick(0); // My joystick
     private final ThrustmasterJoystick rightJoystick = new ThrustmasterJoystick(1);
+    private final LogitechController operatorController = new LogitechController(2);
 
     private final CommandSwerveDrivetrain drivetrain = TunerConstants.DriveTrain; // My drivetrain
     private final TransportSubsystem transport = new TransportSubsystem(
@@ -61,9 +63,6 @@ public class RobotContainer implements Logged {
     private final AutoManager autoManager = new AutoManager();
 
     private void configureBindings() {
-
-        
-
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(
                         () -> drive.withVelocityX(-leftJoystick.getYAxis().get() * MaxSpeed) // Drive forward with
@@ -91,21 +90,23 @@ public class RobotContainer implements Logged {
 
         rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward());
 
-        rightJoystick.getRightThumb().whileTrue(intake.runIntakeBackward());
+        rightJoystick.getRightThumb().whileTrue(transport.runTransportReverse().alongWith(intake.runIntakeBackward()));
 
         // leftJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand());
 
-        leftJoystick
-                .getTrigger()
-                .and(rightJoystick.getTrigger())
-                .whileTrue(transport.runTransportForward().alongWith(shooterWheels.setTwoWheelVelocity(topRollerSpeedTunable.getDouble(), bottomRollerSpeedTunable.getDouble())));
+        operatorController.getLeftBumper().whileTrue(shooterWheels.setTwoWheelVelocity(topRollerSpeedTunable.getDouble(), bottomRollerSpeedTunable.getDouble()));
+
+        rightJoystick.getTrigger().whileTrue(transport.runTransportForward().alongWith(shooterWheels.setTwoWheelVelocity(topRollerSpeedTunable.getDouble(), bottomRollerSpeedTunable.getDouble())));
+
+        // leftJoystick
+        //         .getTrigger()
+        //         .and(rightJoystick.getTrigger())
+        //         .whileTrue(transport.runTransportForward().alongWith(shooterWheels.setTwoWheelVelocity(topRollerSpeedTunable.getDouble(), bottomRollerSpeedTunable.getDouble())));
 
         // reset the field-centric heading on left bumper press
         rightJoystick.getRightTopRight().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
         rightJoystick.getTrigger().whileTrue(intake.runIntakeForward().alongWith(transport.runTransportForward()).until(() -> transport.getCentralTransportSensor()));
-
-        leftJoystick.getBottomThumb().whileTrue(transport.runTransportReverse().alongWith(intake.runIntakeBackward()));
 
         if (Utils.isSimulation()) {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
