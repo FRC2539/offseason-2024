@@ -45,8 +45,8 @@ public class RobotContainer implements Logged {
             new MotorIOTalonSRX(Constants.BOTTOM_INTAKE_MOTOR_PORT));
     private final ShooterWheelsSubsystem shooterWheels = new ShooterWheelsSubsystem(
             Constants.TOP_SHOOTER_WHEELS_MOTOR_PORT, "rio", Constants.BOTTOM_SHOOTER_WHEELS_MOTOR_PORT, "rio");
-    private final ShooterPivot pivot =
-            new ShooterPivot(Constants.PIVOT_MOTOR_PORT, "rio", Constants.THROUGHBORE_ENCODER_PORT_PIVOT);
+    //private final ShooterPivot pivot =
+            //new ShooterPivot(Constants.PIVOT_MOTOR_PORT, "rio", Constants.THROUGHBORE_ENCODER_PORT_PIVOT);
   // private final ShooterElevator shooterElevator = new ShooterElevator(0, null)
 
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -88,23 +88,24 @@ public class RobotContainer implements Logged {
 
         LoggedReceiver topRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/topTunable", .6d);
         LoggedReceiver bottomRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/bottomTunable", .6d);
-        LoggedReceiver pivotAngleTunable = Logger.tunable("/ShooterSubsystem/pivotTunable", 60d);
 
         rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward());
 
         rightJoystick.getRightThumb().whileTrue(intake.runIntakeBackward());
 
-        leftJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand());
+        // leftJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand());
 
         leftJoystick
                 .getTrigger()
                 .and(rightJoystick.getTrigger())
-                .whileTrue(transport.runTransportForward().alongWith(shooterWheels.setShooterVelocity(12)));
+                .whileTrue(transport.runTransportForward().alongWith(shooterWheels.setTwoWheelVelocity(topRollerSpeedTunable.getDouble(), bottomRollerSpeedTunable.getDouble())));
 
         // reset the field-centric heading on left bumper press
         rightJoystick.getRightTopRight().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
 
         rightJoystick.getTrigger().whileTrue(intake.runIntakeForward().alongWith(transport.runTransportForward()).until(() -> transport.getCentralTransportSensor()));
+
+        leftJoystick.getBottomThumb().whileTrue(transport.runTransportReverse().alongWith(intake.runIntakeBackward()));
 
         if (Utils.isSimulation()) {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
@@ -120,7 +121,6 @@ public class RobotContainer implements Logged {
         return autoManager.getAutonomousCommand();
     }
 
-  // added for the purpose of automanager but tbh idrk what i'm doing
   public CommandSwerveDrivetrain getDrivetrain() {
     return drivetrain;
   }
@@ -133,9 +133,9 @@ public class RobotContainer implements Logged {
     return intake;
   }
 
-  public ShooterPivot getShooterPivot() {
-    return pivot;
-  }
+//   public ShooterPivot getShooterPivot() {
+//     return pivot;
+//   }
 
   // public ShooterElevator getShooterElevator() {
   //   return shooterElevator;

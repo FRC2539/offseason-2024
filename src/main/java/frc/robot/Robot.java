@@ -8,6 +8,7 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.lib.logging.Logger;
 import monologue.Logged;
 import monologue.Monologue;
 
@@ -32,6 +33,8 @@ public class Robot extends TimedRobot implements Logged {
         Monologue.setFileOnly(DriverStation.isFMSAttached());
         // This method needs to be called periodically, or no logging annotations will process properly.
         Monologue.updateAll();
+
+        Logger.update();
     }
 
     @Override

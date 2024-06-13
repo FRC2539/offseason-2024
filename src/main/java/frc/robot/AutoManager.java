@@ -32,7 +32,7 @@ public class AutoManager {
     public AutoManager(RobotContainer container) {
         CommandSwerveDrivetrain swerve = container.getDrivetrain();
         IntakeSubsystem intake = container.getIntakeSubsystem();
-        ShooterPivot shooterPivot = container.getShooterPivot();
+        //ShooterPivot shooterPivot = container.getShooterPivot();
         ShooterWheelsSubsystem shooterWheels = container.getShooterWheelsSubsystem();
         // ShooterElevator shooterElevator = container.getShooterElevator();
         TransportSubsystem transport = container.getTransportSubsystem();

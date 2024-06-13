@@ -56,11 +56,11 @@ public class TransportSubsystem extends SubsystemBase implements Logged {
     }
 
     public Command runTransportReverse() {
-        return runTransport(0.15);
+        return runTransport(0.3);
     }
 
     public Command runTransportForward() {
-        return runTransport(-0.15);
+        return runTransport(-0.3);
     }
 
     public Command stopTransport() {
