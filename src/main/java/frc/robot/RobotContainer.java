@@ -85,8 +85,8 @@ public class RobotContainer implements Logged {
 
         // rightJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand())
 
-        LoggedReceiver topRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/topTunable", .6d);
-        LoggedReceiver bottomRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/bottomTunable", .6d);
+        LoggedReceiver topRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/topTunable", 12d);
+        LoggedReceiver bottomRollerSpeedTunable = Logger.tunable("/ShooterSubsystem/bottomTunable", 12d);
 
         rightJoystick.getLeftThumb().whileTrue(intake.runIntakeForward().alongWith(transport.runTransportForward()).until(() -> transport.getCentralTransportSensor()));
 
