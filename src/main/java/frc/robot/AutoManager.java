@@ -1,10 +1,17 @@
 package frc.robot;
 
+import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.subsystems.intake.IntakeSubsystem;
+import frc.robot.subsystems.shooter.ShooterElevator;
+import frc.robot.subsystems.shooter.ShooterPivot;
+import frc.robot.subsystems.shooter.ShooterWheelsSubsystem;
+import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
+import frc.robot.subsystems.transport.TransportSubsystem;
 
 public class AutoManager {
 
@@ -24,7 +31,20 @@ public class AutoManager {
         SmartDashboard.putData("AutoChooser", autoChooser);
     }
 
-    //idk if this actually works
+    public AutoManager(RobotContainer container) {
+        CommandSwerveDrivetrain swerve = container.getDrivetrain();
+        IntakeSubsystem intake = container.getIntakeSubsystem();
+        ShooterPivot shooterPivot = container.getShooterPivot();
+        ShooterWheelsSubsystem shooterWheels = container.getShooterWheelsSubsystem();
+        // ShooterElevator shooterElevator = container.getShooterElevator();
+        TransportSubsystem transport = container.getTransportSubsystem();
+    
+        NamedCommands.registerCommand("shoot", transport.runTransportForward().alongWith(shooterWheels.setShooterVelocity(12)));
+        NamedCommands.registerCommand("intake", intake.runIntakeForward());
+    
+    }
+
+    // idk if this actually works
     public Command getAutonomousCommand() {
         Command chosenPathCommand = new PathPlannerAuto(autoChooser.getSelected().pathName);
 

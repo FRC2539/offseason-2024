@@ -44,6 +44,7 @@ public class RobotContainer implements Logged {
   private final IntakeSubsystem intake = new IntakeSubsystem(new MotorIOTalonSRX(Constants.TOP_INTAKE_MOTOR_PORT), new MotorIOTalonSRX(Constants.BOTTOM_INTAKE_MOTOR_PORT));
   private final ShooterWheelsSubsystem shooterWheels = new ShooterWheelsSubsystem(Constants.TOP_SHOOTER_WHEELS_MOTOR_PORT, "rio", Constants.BOTTOM_SHOOTER_WHEELS_MOTOR_PORT, "rio");
   private final ShooterPivot pivot = new ShooterPivot(Constants.PIVOT_MOTOR_PORT, "rio", Constants.THROUGHBORE_ENCODER_PORT_PIVOT);
+  // private final ShooterElevator shooterElevator = new ShooterElevator(0, null)
 
 
   private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
@@ -99,4 +100,30 @@ public class RobotContainer implements Logged {
   public Command getAutonomousCommand() {
     return Commands.print("No autonomous command configured");
   }
+
+  // added for the purpose of automanager but tbh idrk what i'm doing
+  public CommandSwerveDrivetrain getDrivetrain() {
+    return drivetrain;
+  }
+
+  public TransportSubsystem getTransportSubsystem() {
+    return transport;
+  }
+
+  public IntakeSubsystem getIntakeSubsystem() {
+    return intake;
+  }
+
+  public ShooterPivot getShooterPivot() {
+    return pivot;
+  }
+
+  // public ShooterElevator getShooterElevator() {
+  //   return shooterElevator;
+  // }
+
+  public ShooterWheelsSubsystem getShooterWheelsSubsystem() {
+    return shooterWheels;
+  }
+
 }
