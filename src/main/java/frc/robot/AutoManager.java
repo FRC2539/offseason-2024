@@ -7,6 +7,7 @@ import com.pathplanner.lib.util.PathPlannerLogging;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.subsystems.intake.IntakeSubsystem;
 import frc.robot.subsystems.shooter.ShooterElevator;
 import frc.robot.subsystems.shooter.ShooterPivot;
@@ -14,6 +15,7 @@ import frc.robot.subsystems.shooter.ShooterWheelsSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.transport.TransportSubsystem;
 import monologue.Logged;
+import edu.wpi.first.wpilibj2.command.WaitCommand;
 
 public class AutoManager implements Logged {
 
@@ -50,7 +52,7 @@ public class AutoManager implements Logged {
         // ShooterElevator shooterElevator = container.getShooterElevator();
         TransportSubsystem transport = container.getTransportSubsystem();
     
-        NamedCommands.registerCommand("shoot", transport.runTransportForward().alongWith(shooterWheels.setShooterVelocity(12)));
+        NamedCommands.registerCommand("shoot", shooterWheels.setShooterPercent(0.75).asProxy());
         NamedCommands.registerCommand("intake", intake.runIntakeForward());
     
     }
@@ -65,7 +67,8 @@ public class AutoManager implements Logged {
     private enum AutoOption {
         CLOSE3_CENTER("Center", 4, "4PieceC", "4 Piece Center", true, "Pre-1a-2a-3a"),
         CLOSE3_SOURCE("Source", 4, "4PieceS", "4 Piece Source-side", true, "Pre-3a-2a-1a"),
-        CLOSE3_AMP("Amp", 4, "4PieceA", "4 Piece Amp-side", true, "Pre-1a-2a-3a");
+        CLOSE3_AMP("Amp", 4, "4PieceA", "4 Piece Amp-side", true, "Pre-1a-2a-3a"),
+        TEST("Center", 1, "New Auto", "Test", true, "Test" );
 
         private String pathName;
         public String startPosition;

@@ -49,7 +49,7 @@ public class RobotContainer implements Logged {
             new MotorFactory(new MotorIOTalonSRX(Constants.TOP_INTAKE_MOTOR_PORT)).withInvert().getMotor(),
             new MotorIOTalonSRX(Constants.BOTTOM_INTAKE_MOTOR_PORT));
     private final ShooterWheelsSubsystem shooterWheels = new ShooterWheelsSubsystem(
-            Constants.TOP_SHOOTER_WHEELS_MOTOR_PORT, "rio", Constants.BOTTOM_SHOOTER_WHEELS_MOTOR_PORT, "rio");
+            13, "rio", 14, "rio");
     //private final ShooterPivot pivot =
             //new ShooterPivot(Constants.PIVOT_MOTOR_PORT, "rio", Constants.THROUGHBORE_ENCODER_PORT_PIVOT);
   // private final ShooterElevator shooterElevator = new ShooterElevator(0, null)
@@ -95,11 +95,14 @@ public class RobotContainer implements Logged {
 
         rightJoystick.getRightThumb().whileTrue(transport.runTransportReverse().alongWith(intake.runIntakeBackward()));
 
+        rightJoystick.getLeftBottomLeft().whileTrue(shooterWheels.setShooterPercent(0.5));
+
         // leftJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand());
 
         operatorController.getLeftBumper().whileTrue(shooterWheels.setTwoWheelVelocity(topRollerSpeedTunable.getDouble(), bottomRollerSpeedTunable.getDouble()));
 
-        rightJoystick.getTrigger().whileTrue(transport.runTransportForward().alongWith(shooterWheels.setTwoWheelVelocity(topRollerSpeedTunable.getDouble(), bottomRollerSpeedTunable.getDouble())));
+        leftJoystick.getTrigger().whileTrue(shooterWheels.setShooterPercent(0.5));
+        leftJoystick.getRightThumb().whileTrue(transport.runTransportForward());
 
         // leftJoystick
         //         .getTrigger()

@@ -6,6 +6,7 @@ import frc.lib.framework.motor.MotorIOTalonFX;
 
 public class MotorIOShooterWheels extends MotorIOTalonFX {
 
+
     public MotorIOShooterWheels(int port, String canbus) {
         super(port, canbus);
 
@@ -14,5 +15,10 @@ public class MotorIOShooterWheels extends MotorIOTalonFX {
         configs.kP = 0.2;
         configs.kV = 0.119;
         configurator.apply(configs);
+    }
+
+    public void setInvert(boolean invert)
+    {
+        motor.setInverted(invert);
     }
 }

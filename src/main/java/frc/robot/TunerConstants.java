@@ -72,6 +72,7 @@ public class TunerConstants {
     private static final boolean kInvertRightSide = false;
 
     private static final String kCANbusName = "CANivore";
+    private static final String pigeonCANbus = "rio";
     private static final int kPigeonId = 29;
 
 

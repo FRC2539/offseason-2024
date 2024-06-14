@@ -24,6 +24,9 @@ public class ShooterWheelsSubsystem extends SubsystemBase implements Logged {
         topShooterIO = new MotorIOShooterWheels(topPort, topCanbus);
         bottomShooterIO = new MotorIOShooterWheels(bottomPort, bottomCanbus);
 
+        bottomShooterIO.setInvert(true);
+        topShooterIO.setInvert(false);
+
         setDefaultCommand(stopShooterWheels());
     }
 
