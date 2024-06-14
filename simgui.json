@@ -68,7 +68,6 @@
           "open": true
         },
         "transport": {
-          "open": true,
           "sensor": {
             "open": true
           }

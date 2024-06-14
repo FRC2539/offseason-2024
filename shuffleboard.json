@@ -128,6 +128,48 @@
               "_glyph": 148,
               "_showGlyph": false
             }
+          },
+          "3,1": {
+            "size": [
+              2,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///robot/autoManager/auto/description",
+              "_title": "Scoring Order",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
+          },
+          "4,0": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Simple Dial",
+              "_source0": "network_table:///robot/autoManager/auto/gamePieces",
+              "_title": "robot/autoManager/auto/gamePieces",
+              "_glyph": 148,
+              "_showGlyph": false,
+              "Range/Min": 0.0,
+              "Range/Max": 6.0,
+              "Visuals/Show value": true
+            }
+          },
+          "2,1": {
+            "size": [
+              1,
+              1
+            ],
+            "content": {
+              "_type": "Text View",
+              "_source0": "network_table:///robot/autoManager/auto/startPosition",
+              "_title": "Auto Start",
+              "_glyph": 148,
+              "_showGlyph": false
+            }
           }
         }
       }
@@ -174,9 +216,9 @@
     }
   ],
   "windowGeometry": {
-    "x": -6.666666507720947,
-    "y": 0.6666666865348816,
-    "width": 1297.3333740234375,
-    "height": 526.0
+    "x": -6.400000095367432,
+    "y": 0.800000011920929,
+    "width": 1553.5999755859375,
+    "height": 717.5999755859375
   }
 }

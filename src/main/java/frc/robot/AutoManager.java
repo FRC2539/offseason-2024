@@ -2,6 +2,8 @@ package frc.robot;
 
 import com.pathplanner.lib.auto.NamedCommands;
 import com.pathplanner.lib.commands.PathPlannerAuto;
+import com.pathplanner.lib.util.PathPlannerLogging;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -11,8 +13,9 @@ import frc.robot.subsystems.shooter.ShooterPivot;
 import frc.robot.subsystems.shooter.ShooterWheelsSubsystem;
 import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.transport.TransportSubsystem;
+import monologue.Logged;
 
-public class AutoManager {
+public class AutoManager implements Logged {
 
     public SendableChooser<AutoOption> autoChooser = new SendableChooser<AutoOption>();
 
@@ -20,11 +23,21 @@ public class AutoManager {
         for (AutoOption option : AutoOption.values()) {
             if (option.ordinal() == 0) {
                 autoChooser.setDefaultOption(option.displayName, option);
+
+                log("auto/startPosition", option.startPosition);
+                log("auto/gamePieces", option.gamePieces);
+                log("auto/description", option.description);
             }
             if (option.display) {
                 autoChooser.addOption(option.displayName, option);
             }
         }
+
+        autoChooser.onChange((option) -> {
+            log("auto/startPosition", option.startPosition);
+            log("auto/gamePieces", option.gamePieces);
+            log("auto/description", option.description);
+        });
 
         SmartDashboard.putData("AutoChooser", autoChooser);
     }

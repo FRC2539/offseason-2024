@@ -7,6 +7,9 @@ package frc.robot;
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
+import com.pathplanner.lib.auto.AutoBuilder;
+import com.pathplanner.lib.path.PathPlannerPath;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -51,6 +54,8 @@ public class RobotContainer implements Logged {
             //new ShooterPivot(Constants.PIVOT_MOTOR_PORT, "rio", Constants.THROUGHBORE_ENCODER_PORT_PIVOT);
   // private final ShooterElevator shooterElevator = new ShooterElevator(0, null)
 
+    private final AutoManager autoManager = new AutoManager();
+
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.01)
             .withRotationalDeadband(MaxAngularRate * 0.01) // Add a 10% deadband
@@ -59,8 +64,6 @@ public class RobotContainer implements Logged {
     private final SwerveRequest.SwerveDriveBrake brake = new SwerveRequest.SwerveDriveBrake();
     private final SwerveRequest.PointWheelsAt point = new SwerveRequest.PointWheelsAt();
     private final Telemetry logger = new Telemetry(MaxSpeed);
-
-    private final AutoManager autoManager = new AutoManager();
 
     private void configureBindings() {
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
@@ -120,6 +123,9 @@ public class RobotContainer implements Logged {
 
     public Command getAutonomousCommand() {
         return autoManager.getAutonomousCommand();
+    }
+    private Command pathFromFile(String name) {
+        return AutoBuilder.followPath(PathPlannerPath.fromPathFile(name));
     }
 
   public CommandSwerveDrivetrain getDrivetrain() {
