@@ -16,12 +16,23 @@ import frc.robot.subsystems.swerve.CommandSwerveDrivetrain;
 import frc.robot.subsystems.transport.TransportSubsystem;
 import monologue.Logged;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
+import edu.wpi.first.wpilibj2.command.Commands;
 
 public class AutoManager implements Logged {
 
     public SendableChooser<AutoOption> autoChooser = new SendableChooser<AutoOption>();
 
-    public AutoManager() {
+    public AutoManager(RobotContainer container) {
+        CommandSwerveDrivetrain swerve = container.getDrivetrain();
+        IntakeSubsystem intake = container.getIntakeSubsystem();
+        //ShooterPivot shooterPivot = container.getShooterPivot();
+        ShooterWheelsSubsystem shooterWheels = container.getShooterWheelsSubsystem();
+        // ShooterElevator shooterElevator = container.getShooterElevator();
+        TransportSubsystem transport = container.getTransportSubsystem();
+
+        NamedCommands.registerCommand("shoot", (Commands.parallel(shooterWheels.setShooterPercent(0.5), Commands.sequence(new WaitCommand(0.25), transport.runTransportForward())).withTimeout(0.7).asProxy()));
+        NamedCommands.registerCommand("intake", intake.runIntakeForward().withTimeout(0.6).asProxy());
+
         for (AutoOption option : AutoOption.values()) {
             if (option.ordinal() == 0) {
                 autoChooser.setDefaultOption(option.displayName, option);
@@ -42,18 +53,8 @@ public class AutoManager implements Logged {
         });
 
         SmartDashboard.putData("AutoChooser", autoChooser);
-    }
-
-    public AutoManager(RobotContainer container) {
-        CommandSwerveDrivetrain swerve = container.getDrivetrain();
-        IntakeSubsystem intake = container.getIntakeSubsystem();
-        //ShooterPivot shooterPivot = container.getShooterPivot();
-        ShooterWheelsSubsystem shooterWheels = container.getShooterWheelsSubsystem();
-        // ShooterElevator shooterElevator = container.getShooterElevator();
-        TransportSubsystem transport = container.getTransportSubsystem();
     
-        NamedCommands.registerCommand("shoot", shooterWheels.setShooterPercent(0.75).asProxy());
-        NamedCommands.registerCommand("intake", intake.runIntakeForward());
+        
     
     }
 

@@ -52,6 +52,7 @@ public class ShooterWheelsSubsystem extends SubsystemBase implements Logged {
     {
         topShooterIO.setDutyCycle(dutyCycle);
         bottomShooterIO.setDutyCycle(dutyCycle);
+        System.out.println("Shoot Command at 75%");
     }
 
     public double getTopShooterRPM() {

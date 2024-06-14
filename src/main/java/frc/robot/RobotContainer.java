@@ -54,7 +54,7 @@ public class RobotContainer implements Logged {
             //new ShooterPivot(Constants.PIVOT_MOTOR_PORT, "rio", Constants.THROUGHBORE_ENCODER_PORT_PIVOT);
   // private final ShooterElevator shooterElevator = new ShooterElevator(0, null)
 
-    private final AutoManager autoManager = new AutoManager();
+    private final AutoManager autoManager = new AutoManager(this);
 
     private final SwerveRequest.FieldCentric drive = new SwerveRequest.FieldCentric()
             .withDeadband(MaxSpeed * 0.01)
