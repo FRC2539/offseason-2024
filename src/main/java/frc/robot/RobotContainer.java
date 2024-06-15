@@ -97,12 +97,21 @@ public class RobotContainer implements Logged {
 
         rightJoystick.getLeftBottomLeft().whileTrue(shooterWheels.setShooterPercent(0.5));
 
+        leftJoystick.getTrigger().whileTrue(shooterWheels.setShooterPercent(0.5));
+        rightJoystick.getTrigger().whileTrue(transport.runTransportForward());
+
+        leftJoystick.getBottomThumb().whileTrue(intake.runIntakeForward().alongWith(transport.runTransportForward()));
+
+
         // leftJoystick.getTrigger().onTrue(pivot.setSubwooferAngleCommand());
 
-        operatorController.getLeftBumper().whileTrue(shooterWheels.setTwoWheelVelocity(topRollerSpeedTunable.getDouble(), bottomRollerSpeedTunable.getDouble()));
+        operatorController.getA().whileTrue(intake.runIntakeForward().alongWith(transport.runTransportForward()).until(() -> transport.getCentralTransportSensor()));
 
-        leftJoystick.getTrigger().whileTrue(shooterWheels.setShooterPercent(0.5));
-        leftJoystick.getRightThumb().whileTrue(transport.runTransportForward());
+        operatorController.getB().whileTrue(transport.runTransportReverse().alongWith(intake.runIntakeBackward()));
+
+        operatorController.getLeftTrigger().whileTrue(shooterWheels.setShooterPercent(0.5));
+        operatorController.getRightTrigger().whileTrue(transport.runTransportForward());
+
 
         // leftJoystick
         //         .getTrigger()
@@ -111,8 +120,6 @@ public class RobotContainer implements Logged {
 
         // reset the field-centric heading on left bumper press
         rightJoystick.getRightTopRight().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
-
-        rightJoystick.getTrigger().whileTrue(intake.runIntakeForward().alongWith(transport.runTransportForward()).until(() -> transport.getCentralTransportSensor()));
 
         if (Utils.isSimulation()) {
             drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
