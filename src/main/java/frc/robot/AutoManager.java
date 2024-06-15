@@ -30,7 +30,7 @@ public class AutoManager implements Logged {
         // ShooterElevator shooterElevator = container.getShooterElevator();
         TransportSubsystem transport = container.getTransportSubsystem();
 
-        NamedCommands.registerCommand("shoot", (Commands.parallel(shooterWheels.setShooterPercent(0.5), Commands.sequence(new WaitCommand(0.25), transport.runTransportForward())).withTimeout(0.7).asProxy()));
+        NamedCommands.registerCommand("shoot", (Commands.parallel(shooterWheels.setShooterPercent(0.5), Commands.sequence(new WaitCommand(0.25), transport.runTransportForward())).withTimeout(0.65).asProxy()));
         NamedCommands.registerCommand("intake", intake.runIntakeForward().withTimeout(0.6).asProxy());
 
         for (AutoOption option : AutoOption.values()) {
