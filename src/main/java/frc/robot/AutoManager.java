@@ -30,8 +30,10 @@ public class AutoManager implements Logged {
         // ShooterElevator shooterElevator = container.getShooterElevator();
         TransportSubsystem transport = container.getTransportSubsystem();
 
-        NamedCommands.registerCommand("shoot", (Commands.parallel(shooterWheels.setShooterPercent(0.5), Commands.sequence(new WaitCommand(0.25), transport.runTransportForward())).withTimeout(0.7).asProxy()));
-        NamedCommands.registerCommand("intake", intake.runIntakeForward().withTimeout(0.6).asProxy());
+        NamedCommands.registerCommand("shoot", (Commands.parallel(
+            shooterWheels.setShooterPercent(0.5), 
+            Commands.sequence(new WaitCommand(1),transport.runTransport(-.3).alongWith(intake.runIntake(-.75)))).withTimeout(2.5).asProxy()));
+        NamedCommands.registerCommand("intake", intake.runIntakeForward().withTimeout(0.6).withTimeout(3).asProxy());
 
         for (AutoOption option : AutoOption.values()) {
             if (option.ordinal() == 0) {
@@ -66,8 +68,8 @@ public class AutoManager implements Logged {
     }
 
     private enum AutoOption {
-        CLOSE3_CENTER("Center", 4, "4PieceC", "4 Piece Center", true, "Pre-1a-2a-3a"),
         CLOSE3_SOURCE("Source", 4, "4PieceS", "4 Piece Source-side", true, "Pre-3a-2a-1a"),
+        CLOSE3_CENTER("Center", 4, "4PieceC", "4 Piece Center", true, "Pre-1a-2a-3a"),
         CLOSE3_AMP("Amp", 4, "4PieceA", "4 Piece Amp-side", true, "Pre-1a-2a-3a"),
         TEST("Center", 1, "New Auto", "Test", true, "Test" );
 
