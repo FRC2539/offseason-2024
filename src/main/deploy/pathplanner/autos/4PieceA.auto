@@ -5,7 +5,7 @@
       "x": 0.7456751736959918,
       "y": 6.657761248091568
     },
-    "rotation": 60.411638512714916
+    "rotation": -119.526560003711
   },
   "command": {
     "type": "sequential",
@@ -15,12 +15,6 @@
           "type": "named",
           "data": {
             "name": "shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
           }
         },
         {
@@ -48,12 +42,6 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
-          }
-        },
-        {
           "type": "path",
           "data": {
             "pathName": "C-2a"
@@ -75,12 +63,6 @@
           "type": "named",
           "data": {
             "name": "shoot"
-          }
-        },
-        {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.25
           }
         },
         {
