@@ -32,8 +32,8 @@ public class AutoManager implements Logged {
 
         NamedCommands.registerCommand("shoot", (Commands.parallel(
             shooterWheels.setShooterPercent(0.5), 
-            Commands.sequence(new WaitCommand(1),transport.runTransport(-.3).alongWith(intake.runIntake(-.75)))).withTimeout(2.5).asProxy()));
-        NamedCommands.registerCommand("intake", intake.runIntakeForward().withTimeout(0.6).withTimeout(3).asProxy());
+            Commands.sequence(new WaitCommand(1),transport.runTransport(-.3).alongWith(intake.runIntake(-.75)))).withTimeout(2).asProxy()));
+        NamedCommands.registerCommand("intake", intake.runIntakeForward().withTimeout(.75).withTimeout(.75).asProxy());
 
         for (AutoOption option : AutoOption.values()) {
             if (option.ordinal() == 0) {
@@ -62,6 +62,7 @@ public class AutoManager implements Logged {
 
     // idk if this actually works
     public Command getAutonomousCommand() {
+        
         Command chosenPathCommand = new PathPlannerAuto(autoChooser.getSelected().pathName);
 
         return chosenPathCommand;
@@ -71,6 +72,7 @@ public class AutoManager implements Logged {
         CLOSE3_SOURCE("Source", 4, "4PieceS", "4 Piece Source-side", true, "Pre-3a-2a-1a"),
         CLOSE3_CENTER("Center", 4, "4PieceC", "4 Piece Center", true, "Pre-1a-2a-3a"),
         CLOSE3_AMP("Amp", 4, "4PieceA", "4 Piece Amp-side", true, "Pre-1a-2a-3a"),
+        SourceSide("Source", 4, "SourceSide", "SourceSide", true, "SourceSide" ),
         TEST("Center", 1, "New Auto", "Test", true, "Test" );
 
         private String pathName;

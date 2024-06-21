@@ -85,7 +85,7 @@ public class RobotContainer implements Logged {
                                 // negative Y (forward)
                                 .withVelocityY(
                                         -sps(leftJoystick.getXAxis().get()) * MaxSpeed) // Drive left with negative X (left)
-                                .withRotationalRate(cube(rightJoystick.getXAxis().get())
+                                .withRotationalRate(cube(-sps(rightJoystick.getXAxis().get()))
                                         * MaxAngularRate) // Drive counterclockwise with negative X (left)
                         ));
 
@@ -128,7 +128,7 @@ public class RobotContainer implements Logged {
         //         .whileTrue(transport.runTransportForward().alongWith(shooterWheels.setTwoWheelVelocity(topRollerSpeedTunable.getDouble(), bottomRollerSpeedTunable.getDouble())));
 
         // reset the field-centric heading on left bumper press
-        rightJoystick.getLeftTopLeft().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative()));
+        rightJoystick.getLeftTopLeft().onTrue(drivetrain.runOnce(() -> drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(0)))));
 
         leftJoystick.getTrigger().whileTrue(shooterWheels.setShooterPercent(0.5));
         operatorController.getLeftBumper().whileTrue(shooterWheels.setShooterPercent(0.5));
@@ -136,9 +136,9 @@ public class RobotContainer implements Logged {
         // .and((operatorController.getLeftBumper().debounce(0.5, DebounceType.kRising)).or(operatorController.getRightBumper().debounce(0.75, DebounceType.kRising)).or(leftJoystick.getTrigger().debounce(0.5, DebounceType.kRising)))
         rightJoystick.getTrigger().whileTrue(transport.runTransport(-1).alongWith(intake.runIntake(-.75)));
 
-        if (Utils.isSimulation()) {
-            drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(90)));
-        }
+        // if (Utils.isSimulation()) {
+        //drivetrain.seedFieldRelative(new Pose2d(new Translation2d(), Rotation2d.fromDegrees(180)));
+        // }
         drivetrain.registerTelemetry(logger::telemeterize);
 
     }
