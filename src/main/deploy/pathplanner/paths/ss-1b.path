@@ -3,25 +3,25 @@
   "waypoints": [
     {
       "anchor": {
-        "x": 8.737135957684238,
-        "y": 0.7586790529031283
+        "x": 8.746862612208638,
+        "y": 0.6030525805127416
       },
       "prevControl": null,
       "nextControl": {
-        "x": 6.0136726908524905,
-        "y": 0.7003191257567339
+        "x": 5.352260183193352,
+        "y": -0.6030525805127462
       },
       "isLocked": false,
       "linkedName": "ss-1a"
     },
     {
       "anchor": {
-        "x": 0.9071790655429648,
-        "y": 4.435354463125988
+        "x": 0.9460856836405611,
+        "y": 4.3964478450283915
       },
       "prevControl": {
-        "x": 3.4361092418867303,
-        "y": 2.431663631099773
+        "x": 3.4750158599843264,
+        "y": 2.3927570130021767
       },
       "nextControl": null,
       "isLocked": false,
@@ -45,7 +45,7 @@
   "reversed": false,
   "folder": "SourceSide",
   "previewStartingState": {
-    "rotation": -9.188836077358614,
+    "rotation": 20.955776730632255,
     "velocity": 0
   },
   "useDefaultConstraints": true

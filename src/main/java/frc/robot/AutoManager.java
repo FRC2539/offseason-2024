@@ -32,7 +32,7 @@ public class AutoManager implements Logged {
 
         NamedCommands.registerCommand("shoot", (Commands.parallel(
             shooterWheels.setShooterPercent(0.5), 
-            Commands.sequence(new WaitCommand(1),transport.runTransport(-.3).alongWith(intake.runIntake(-.75)))).withTimeout(2).asProxy()));
+            Commands.sequence(new WaitCommand(0.1),transport.runTransport(-.3).alongWith(intake.runIntake(-.75)))).withTimeout(2).asProxy()));
         NamedCommands.registerCommand("intake", intake.runIntakeForward().withTimeout(.75).withTimeout(.75).asProxy());
 
         for (AutoOption option : AutoOption.values()) {

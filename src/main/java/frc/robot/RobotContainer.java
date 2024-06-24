@@ -85,12 +85,15 @@ public class RobotContainer implements Logged {
                                 // negative Y (forward)
                                 .withVelocityY(
                                         -sps(leftJoystick.getXAxis().get()) * MaxSpeed) // Drive left with negative X (left)
-                                .withRotationalRate(cube(-sps(rightJoystick.getXAxis().get()))
+                                .withRotationalRate(-cube(rightJoystick.getXAxis().get())
                                         * MaxAngularRate) // Drive counterclockwise with negative X (left)
                         ));
 
         new Trigger(() -> transport.getCentralTransportSensor()).whileTrue(lights.blinkLights());
-        new Trigger(() -> transport.getCentralTransportSensor()).negate().whileTrue(lights.orangeLights());
+
+        Trigger spunupTrigger = (operatorController.getLeftBumper().and(rightJoystick.getRightThumb().negate()).and(rightJoystick.getLeftThumb().negate())).debounce(1.3, DebounceType.kRising);
+
+        spunupTrigger.whileTrue(lights.orangeLights());
 
         // leftJoystick.getTrigger().whileTrue(drivetrain.applyRequest(() -> brake));
 
@@ -132,7 +135,7 @@ public class RobotContainer implements Logged {
 
         leftJoystick.getTrigger().whileTrue(shooterWheels.setShooterPercent(0.5));
         operatorController.getLeftBumper().whileTrue(shooterWheels.setShooterPercent(0.5));
-        operatorController.getRightBumper().whileTrue(shooterWheels.setShooterPercent(.75));
+        operatorController.getRightBumper().whileTrue(shooterWheels.setShooterPercent(.65));
         // .and((operatorController.getLeftBumper().debounce(0.5, DebounceType.kRising)).or(operatorController.getRightBumper().debounce(0.75, DebounceType.kRising)).or(leftJoystick.getTrigger().debounce(0.5, DebounceType.kRising)))
         rightJoystick.getTrigger().whileTrue(transport.runTransport(-1).alongWith(intake.runIntake(-.75)));
 

@@ -37,11 +37,15 @@ public class LightsSubsystem extends SubsystemBase {
     }
 
     public Command orangeLights() {
-        return Commands.run(() -> setColor(0.77));
+        return Commands.run(() -> setColor(0.77)).handleInterrupt(() -> setColor(0.99));
     }
 
+    // public Command blackLights() {
+    //     return Commands.run(() -> setColor(0.99));
+    // }
+
     public Command blinkLights() {
-        return Commands.repeatingSequence(Commands.run(()-> {setColor(.93); System.out.println("blinking");}).withTimeout(.05), Commands.run(()-> setColor(.99)).withTimeout(.05));
+        return Commands.repeatingSequence(Commands.run(()-> {setColor(.93); System.out.println("blinking");}).withTimeout(.05), Commands.run(()-> setColor(.99)).withTimeout(.05)).handleInterrupt(() -> setColor(0.99));
     }
 }
 
