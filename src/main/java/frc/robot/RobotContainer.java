@@ -4,12 +4,15 @@
 
 package frc.robot;
 
+import java.util.function.Function;
+
 import com.ctre.phoenix6.Utils;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveModule.DriveRequestType;
 import com.ctre.phoenix6.mechanisms.swerve.SwerveRequest;
 import com.pathplanner.lib.auto.AutoBuilder;
 import com.pathplanner.lib.path.PathPlannerPath;
 
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.filter.Debouncer.DebounceType;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
@@ -79,19 +82,21 @@ public class RobotContainer implements Logged {
     }
 
     private void configureBindings() {
+        final Function<Double, Double>  rotationSpeedModifier = (x) -> cube(x);
+        final Function<Double, Double> translationSpeedModifier = (x) -> sps(x);
         drivetrain.setDefaultCommand( // Drivetrain will execute this command periodically
                 drivetrain.applyRequest(
-                        () -> drive.withVelocityX(-sps(leftJoystick.getYAxis().get()) * MaxSpeed) // Drive forward with
+                        () -> drive.withVelocityX(-translationSpeedModifier.apply(leftJoystick.getYAxis().get()) * MaxSpeed) // Drive forward with
                                 // negative Y (forward)
                                 .withVelocityY(
-                                        -sps(leftJoystick.getXAxis().get()) * MaxSpeed) // Drive left with negative X (left)
-                                .withRotationalRate(-cube(rightJoystick.getXAxis().get())
+                                        -translationSpeedModifier.apply(leftJoystick.getXAxis().get()) * MaxSpeed) // Drive left with negative X (left)
+                                .withRotationalRate(-rotationSpeedModifier.apply(rightJoystick.getXAxis().get())
                                         * MaxAngularRate) // Drive counterclockwise with negative X (left)
                         ));
 
         new Trigger(() -> transport.getCentralTransportSensor()).whileTrue(lights.blinkLights());
 
-        Trigger spunupTrigger = (operatorController.getLeftBumper().and(rightJoystick.getRightThumb().negate()).and(rightJoystick.getLeftThumb().negate())).debounce(1.3, DebounceType.kRising);
+        Trigger spunupTrigger = (operatorController.getLeftBumper().and(rightJoystick.getRightThumb().negate()).and(rightJoystick.getLeftThumb().negate())).debounce(.7, DebounceType.kRising);
 
         spunupTrigger.whileTrue(lights.orangeLights());
 
