@@ -18,27 +18,15 @@
           }
         },
         {
-          "type": "wait",
+          "type": "path",
           "data": {
-            "waitTime": 0.15
+            "pathName": "ss-2b"
           }
         },
         {
           "type": "path",
           "data": {
-            "pathName": "Copy of ss-1a"
-          }
-        },
-        {
-          "type": "named",
-          "data": {
-            "name": "intake"
-          }
-        },
-        {
-          "type": "path",
-          "data": {
-            "pathName": "Copy of ss-1b"
+            "pathName": "2b-ss"
           }
         },
         {
@@ -48,15 +36,9 @@
           }
         },
         {
-          "type": "wait",
-          "data": {
-            "waitTime": 0.15
-          }
-        },
-        {
           "type": "path",
           "data": {
-            "pathName": "Copy of Copy of ss-1a"
+            "pathName": "ss-1b"
           }
         }
       ]

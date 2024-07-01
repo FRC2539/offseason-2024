@@ -32,8 +32,9 @@ public class AutoManager implements Logged {
 
         NamedCommands.registerCommand("shoot", (Commands.parallel(
             shooterWheels.setShooterPercent(0.5), 
-            Commands.sequence(new WaitCommand(0.4),transport.runTransport(-.3).alongWith(intake.runIntake(-.75)))).withTimeout(2).asProxy()));
-        NamedCommands.registerCommand("intake", intake.runIntakeForward().withTimeout(0.5).asProxy()); //timeout removed
+            Commands.sequence(new WaitCommand(0.2),transport.runTransport(-.3).alongWith(intake.runIntake(-.75)))).withTimeout(1).asProxy()));
+
+        NamedCommands.registerCommand("intake", intake.runIntakeForward().until(() -> transport.getCentralTransportSensor()).withTimeout(1).asProxy()); //timeout removed
 
         for (AutoOption option : AutoOption.values()) {
             if (option.ordinal() == 0) {
@@ -73,7 +74,8 @@ public class AutoManager implements Logged {
         CLOSE3_CENTER("Center", 4, "4PieceC", "4 Piece Center", true, "Pre-1a-2a-3a"),
         CLOSE3_AMP("Amp", 4, "4PieceA", "4 Piece Amp-side", true, "Pre-1a-2a-3a"),
         SourceSide("Source", 4, "SourceSide", "SourceSide", true, "SourceSide" ),
-        TEST("Center", 1, "New Auto", "Test", true, "Test" );
+        TEST("Center", 1, "New Auto", "Test", true, "Test" ),
+        AmpSide("Amp", 3, "3pieceA", "AmpSide", true, "Pre-1a-5b");
 
         private String pathName;
         public String startPosition;
